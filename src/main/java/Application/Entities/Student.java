@@ -22,5 +22,5 @@ public class Student {
     private BigDecimal balance;
     @ManyToMany
     @JsonIgnore
-    List<Discipline> disciplineList;
+    List<Discipline> disciplines;
 }
