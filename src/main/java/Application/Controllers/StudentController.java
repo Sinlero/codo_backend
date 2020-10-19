@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/student")
 public class StudentController {
 
     @Autowired
     StudentService studentService;
 
-    @RequestMapping("/student/getDisciplinesById")
+    @RequestMapping("/getDisciplinesById")
     public ResponseEntity getDisciplinesById(@RequestParam Long id) {
         return ResponseEntity.ok(studentService.getDisciplinesById(id));
     }
