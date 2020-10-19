@@ -2,13 +2,13 @@ package Application.Servicies;
 
 import Application.Entities.Discipline;
 import Application.Entities.Student;
+import Application.Repositories.DisciplineRepository;
 import Application.Repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class StudentService {
@@ -16,11 +16,27 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    public List<Discipline> getDisciplinesById(Long id) {
+    @Autowired
+    DisciplineRepository disciplineRepository;
+
+    public Set<Discipline> getDisciplinesById(Long id) {
         Optional<Student> student = studentRepository.findById(id);
         if (!student.isPresent()) {
             return null;
         }
         return student.get().getDisciplines();
+    }
+
+    public String changeDisciplines(Long userId, TreeSet<Long> disciplines) {
+        Student student = studentRepository.findById(userId).orElse(null);
+        if(student == null) {
+            return "Student not found";
+        }
+        Set<Discipline> oldDisciplines = student.getDisciplines();
+        Iterable<Discipline> disciplineList = disciplineRepository.findAllById(disciplines);
+        oldDisciplines.addAll((Collection<Discipline>) disciplineList);
+        student.setDisciplines(oldDisciplines);
+        studentRepository.save(student);
+        return "Success";
     }
 }
