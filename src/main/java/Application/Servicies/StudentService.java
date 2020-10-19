@@ -21,6 +21,6 @@ public class StudentService {
         if (!student.isPresent()) {
             return null;
         }
-        return student.get().getDisciplineList();
+        return student.get().getDisciplines();
     }
 }
