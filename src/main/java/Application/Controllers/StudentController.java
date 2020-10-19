@@ -13,7 +13,7 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @RequestMapping("/students/getDisciplinesById")
+    @RequestMapping("/student/getDisciplinesById")
     public ResponseEntity getDisciplinesById(@RequestParam Long id) {
         return ResponseEntity.ok(studentService.getDisciplinesById(id));
     }
