@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "students")
 @Data
@@ -22,5 +23,5 @@ public class Student {
     private BigDecimal balance;
     @ManyToMany
     @JsonIgnore
-    List<Discipline> disciplines;
+    Set<Discipline> disciplines;
 }
