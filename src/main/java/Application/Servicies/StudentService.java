@@ -53,5 +53,8 @@ public class StudentService {
         return "Success";
     }
 
+    public List<Student> getAllStudents() {
+        return (List<Student>) studentRepository.findAll();
+    }
 
 }
