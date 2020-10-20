@@ -27,7 +27,7 @@ public class StudentService {
         return student.get().getDisciplines();
     }
 
-    public String addDisciplines(Long userId, TreeSet<Long> disciplines) {
+    public String addDisciplines(Long userId, Set<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
         if(student == null) {
             return "Student not found";
@@ -39,5 +39,19 @@ public class StudentService {
         studentRepository.save(student);
         return "Success";
     }
+
+    public String deleteDisciplines(Long userId, Set<Long> disciplines) {
+        Student student = studentRepository.findById(userId).orElse(null);
+        if(student == null) {
+            return "Student not found";
+        }
+        Set<Discipline> oldDisciplines = student.getDisciplines();
+        Iterable<Discipline> disciplineList = disciplineRepository.findAllById(disciplines);
+        oldDisciplines.removeAll((Collection<Discipline>) disciplineList);
+        student.setDisciplines(oldDisciplines);
+        studentRepository.save(student);
+        return "Success";
+    }
+
 
 }
