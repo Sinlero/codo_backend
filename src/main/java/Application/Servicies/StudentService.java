@@ -27,7 +27,7 @@ public class StudentService {
         return student.get().getDisciplines();
     }
 
-    public String changeDisciplines(Long userId, TreeSet<Long> disciplines) {
+    public String addDisciplines(Long userId, TreeSet<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
         if(student == null) {
             return "Student not found";
@@ -39,4 +39,5 @@ public class StudentService {
         studentRepository.save(student);
         return "Success";
     }
+
 }

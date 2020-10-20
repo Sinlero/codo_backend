@@ -18,9 +18,9 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getDisciplinesById(id));
     }
 
-    @RequestMapping("/postDisciplines")
+    @RequestMapping("/addDisciplines")
     @ResponseBody
-    public String  changeDisciplines(@RequestBody DisciplinesUpdate update) {
-        return studentService.changeDisciplines(update.getUserId(), update.getDisciplines());
+    public String  addDisciplines(@RequestBody DisciplinesUpdate update) {
+        return studentService.addDisciplines(update.getUserId(), update.getDisciplines());
     }
 }
