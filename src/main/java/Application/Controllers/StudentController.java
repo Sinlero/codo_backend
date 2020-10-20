@@ -23,4 +23,15 @@ public class StudentController {
     public String  addDisciplines(@RequestBody DisciplinesUpdate update) {
         return studentService.addDisciplines(update.getUserId(), update.getDisciplines());
     }
+
+    @RequestMapping("/deleteDisciplines")
+    @ResponseBody
+    public String deleteDisciplines(@RequestBody DisciplinesUpdate update) {
+        return studentService.deleteDisciplines(update.getUserId(), update.getDisciplines());
+    }
+
+    @RequestMapping("/getAllStudents")
+    public ResponseEntity getAllStudents() {
+        return ResponseEntity.ok(studentService.getAllStudents());
+    }
 }
