@@ -26,6 +26,6 @@ public class Student {
     private boolean sex;
     private BigDecimal balance;
     @ManyToMany
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     Set<Discipline> disciplines;
 }
