@@ -58,10 +58,7 @@ public class StudentService {
     }
 
     public String addStudent(Student newStudent) {
-        System.out.println(newStudent.getFio());
-        System.out.println(newStudent);
-        System.out.println(newStudent.isSex());
-        System.out.println(newStudent.getBalance());
+        studentRepository.save(newStudent);
         return "Success";
     }
 }
