@@ -1,5 +1,6 @@
 package Application.Controllers;
 
+import Application.Entities.Student;
 import Application.Models.DisciplinesUpdate;
 import Application.Servicies.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,11 @@ public class StudentController {
     @RequestMapping("/getAllStudents")
     public ResponseEntity getAllStudents() {
         return ResponseEntity.ok(studentService.getAllStudents());
+    }
+
+    @RequestMapping("/addStudent")
+    @ResponseBody
+    public String addStudent(@RequestBody Student newStudent) {
+        return studentService.addStudent(newStudent);
     }
 }
