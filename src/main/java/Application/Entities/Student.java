@@ -18,6 +18,9 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String login;
+    @JsonIgnore
+    private String password;
     private String fio;
     private boolean sex;
     private BigDecimal balance;
