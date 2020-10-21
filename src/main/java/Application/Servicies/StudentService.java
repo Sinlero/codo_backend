@@ -57,4 +57,11 @@ public class StudentService {
         return (List<Student>) studentRepository.findAll();
     }
 
+    public String addStudent(Student newStudent) {
+        System.out.println(newStudent.getFio());
+        System.out.println(newStudent);
+        System.out.println(newStudent.isSex());
+        System.out.println(newStudent.getBalance());
+        return "Success";
+    }
 }
