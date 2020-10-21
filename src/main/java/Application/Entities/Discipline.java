@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity(name = "disciplines")
@@ -19,4 +20,5 @@ public class Discipline {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private BigDecimal cost;
 }
