@@ -16,19 +16,19 @@ public class StudentController {
 
     @RequestMapping("/getDisciplinesById")
     public ResponseEntity getDisciplinesById(@RequestParam Long id) {
-        return ResponseEntity.ok(studentService.getDisciplinesById(id));
+        return ResponseEntity.ok(studentService.getDisciplinesByStudentId(id));
     }
 
     @RequestMapping("/addDisciplines")
     @ResponseBody
     public String  addDisciplines(@RequestBody DisciplinesUpdate update) {
-        return studentService.addDisciplines(update.getUserId(), update.getDisciplines());
+        return studentService.addDisciplinesForStudent(update.getUserId(), update.getDisciplines());
     }
 
     @RequestMapping("/deleteDisciplines")
     @ResponseBody
     public String deleteDisciplines(@RequestBody DisciplinesUpdate update) {
-        return studentService.deleteDisciplines(update.getUserId(), update.getDisciplines());
+        return studentService.deleteDisciplinesOfStudent(update.getUserId(), update.getDisciplines());
     }
 
     @RequestMapping("/getAllStudents")
