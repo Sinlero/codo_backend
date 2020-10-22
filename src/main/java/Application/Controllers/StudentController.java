@@ -41,4 +41,10 @@ public class StudentController {
     public String addStudent(@RequestBody Student newStudent) {
         return studentService.addStudent(newStudent);
     }
+
+    @RequestMapping("/deleteStudentById")
+    public String deleteStudent(@RequestParam Long id) {
+        return studentService.deleteStudent(id);
+    }
+
 }
