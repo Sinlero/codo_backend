@@ -19,7 +19,7 @@ public class StudentService {
     @Autowired
     DisciplineRepository disciplineRepository;
 
-    public Set<Discipline> getDisciplinesById(Long id) {
+    public Set<Discipline> getDisciplinesByStudentId(Long id) {
         Optional<Student> student = studentRepository.findById(id);
         if (!student.isPresent()) {
             return null;
@@ -27,7 +27,7 @@ public class StudentService {
         return student.get().getDisciplines();
     }
 
-    public String addDisciplines(Long userId, Set<Long> disciplines) {
+    public String addDisciplinesForStudent(Long userId, Set<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
         if(student == null) {
             return "Student not found";
@@ -40,7 +40,7 @@ public class StudentService {
         return "Success";
     }
 
-    public String deleteDisciplines(Long userId, Set<Long> disciplines) {
+    public String deleteDisciplinesOfStudent(Long userId, Set<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
         if(student == null) {
             return "Student not found";
