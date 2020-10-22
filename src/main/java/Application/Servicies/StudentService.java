@@ -61,4 +61,13 @@ public class StudentService {
         studentRepository.save(newStudent);
         return "Success";
     }
+
+    public String deleteStudent(Long id) {
+        Optional<Student> student = studentRepository.findById(id);
+        if(!student.isPresent()) {
+            return null;
+        }
+        studentRepository.deleteById(id);
+        return "Success";
+    }
 }
