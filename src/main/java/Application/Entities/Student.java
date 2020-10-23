@@ -25,6 +25,7 @@ public class Student {
     private String fio;
     private boolean sex;
     private BigDecimal balance;
+    private String course;
     @ManyToMany
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     Set<Discipline> disciplines;
