@@ -1,7 +1,9 @@
 package Application.Security;
 
-import Application.Entities.User;
-import Application.Repositories.UserRepository;
+import Application.Entities.Student;
+import Application.Entities.Teacher;
+import Application.Repositories.StudentRepository;
+import Application.Repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;
@@ -19,7 +21,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class Configuration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserRepository userRepository;
+    StudentRepository studentRepository;
+
+    @Autowired
+    TeacherRepository teacherRepository;
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -48,11 +53,18 @@ public class Configuration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userName -> {
-                    if (userRepository.getUserByLogin(userName).isPresent()) {
-                        User user = userRepository.getUserByLogin(userName).get();
+                    if (studentRepository.findStudentByLogin(userName).isPresent()) {
+                        Student student = studentRepository.findStudentByLogin(userName).get();
                         return new org.springframework.security.core.userdetails.User(
-                                user.getLogin(),
-                                "{noop}" + user.getPassword(), true, true, true, true,
+                                student.getLogin(),
+                                "{noop}" + student.getPassword(), true, true, true, true,
+                                AuthorityUtils.createAuthorityList("USER"));
+
+                    } else if (teacherRepository.findTeacherByLogin(userName).isPresent()) {
+                        Teacher teacher = teacherRepository.findTeacherByLogin(userName).get();
+                        return new org.springframework.security.core.userdetails.User(
+                                teacher.getLogin(),
+                                "{noop}" + teacher.getPassword(), true, true, true, true,
                                 AuthorityUtils.createAuthorityList("USER"));
                     }
                     return null;
