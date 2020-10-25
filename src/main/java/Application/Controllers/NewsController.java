@@ -20,7 +20,8 @@ public class NewsController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public ResponseEntity<String> upload(@RequestParam(name = "file")MultipartFile file) {
-        return newsService.upload(file);
+    public ResponseEntity<String> upload(@RequestParam MultipartFile file, @RequestParam String head,
+                                         @RequestParam String text) {
+        return newsService.upload(head, text, file);
     }
 }
