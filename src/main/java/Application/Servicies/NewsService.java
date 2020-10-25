@@ -20,7 +20,7 @@ public class NewsService {
     }
 
     public ResponseEntity<String> upload(MultipartFile file) {
-        if ((file == null) || (file.getOriginalFilename().equals(""))) {
+        if (file.isEmpty()) {
             return new ResponseEntity<>("Error", HttpStatus.NO_CONTENT);
         }
         File newFile = new File("/" + file.getOriginalFilename());
