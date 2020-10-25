@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Entity(name = "news")
 @AllArgsConstructor
@@ -21,5 +20,12 @@ public class News {
     private String head;
     private String text;
     private String img;
-    private LocalDateTime date;
+    private String date;
+
+    public News(String head, String text, String img, String date) {
+        this.head = head;
+        this.text = text;
+        this.img = img;
+        this.date = date;
+    }
 }
