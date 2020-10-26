@@ -29,4 +29,9 @@ public class NewsController {
     public HttpEntity<byte[]> getImage(@RequestParam("id") Long id) throws IOException {
         return newsService.getImage(id);
     }
+
+    @RequestMapping("/getAll")
+    public ResponseEntity getAllNews() {
+        return newsService.getAll();
+    }
 }
