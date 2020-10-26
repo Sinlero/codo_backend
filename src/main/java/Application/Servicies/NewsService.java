@@ -86,4 +86,8 @@ public class NewsService {
         }
         return bytes;
     }
+
+    public ResponseEntity getAll() {
+       return ResponseEntity.ok(newsRepository.findAll());
+    }
 }
