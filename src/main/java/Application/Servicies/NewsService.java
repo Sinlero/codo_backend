@@ -1,6 +1,8 @@
 package Application.Servicies;
 
+import Application.Entities.Image;
 import Application.Entities.News;
+import Application.Repositories.ImageRepository;
 import Application.Repositories.NewsRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -16,48 +18,54 @@ import java.util.Optional;
 public class NewsService {
 
     NewsRepository newsRepository;
+    ImageRepository imageRepository;
 
-    NewsService(NewsRepository newsRepository) {
+    NewsService(NewsRepository newsRepository, ImageRepository imageRepository) {
         this.newsRepository = newsRepository;
+        this.imageRepository = imageRepository;
     }
 
     public ResponseEntity<String> upload(String head, String text, MultipartFile file) {
-        if (file.isEmpty()) {
-            return new ResponseEntity<>("Error", HttpStatus.NO_CONTENT);
-        }
         File newFile = new File(System.getProperty("user.dir") + "/NewsImages/");
+        String date = LocalDateTime.now().getDayOfMonth() + "." + LocalDateTime.now().getMonth().getValue() + "." +
+                LocalDateTime.now().getYear();
+        News news;
+
         if (!newFile.exists()) {
             newFile.mkdirs();
         }
-        newFile = new File(newFile, file.getOriginalFilename());
-        try {
-            FileOutputStream stream = new FileOutputStream(newFile);
-            stream.write(file.getBytes());
-            stream.flush();
-            stream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if (file.isEmpty()) {
+            Optional<Image> image = imageRepository.findById((long) 1);
+            news = new News(head, text, image.get().getId(), date);
+
+        } else {
+            newFile = new File(newFile, file.getOriginalFilename());
+
+            try {
+                FileOutputStream stream = new FileOutputStream(newFile);
+                stream.write(file.getBytes());
+                stream.flush();
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Image image = new Image(newFile.getAbsolutePath());
+            imageRepository.save(image);
+            news = new News(head, text, image.getId(), date);
         }
-        String date = LocalDateTime.now().getHour() + ":" + LocalDateTime.now().getMinute() + " " +
-                LocalDateTime.now().getDayOfMonth() + "." + LocalDateTime.now().getMonth().getValue() + "." +
-                LocalDateTime.now().getYear();
-        News news = new News(head, text, newFile.getAbsolutePath(), date);
         newsRepository.save(news);
-        System.out.println(newFile);
-        Optional<News> newsId = newsRepository.findByImg(newFile.getAbsolutePath());
-        if (!newsId.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(newsId.get().getId().toString(), HttpStatus.OK);
+        return new ResponseEntity<>(news.getId().toString(), HttpStatus.OK);
     }
 
     public HttpEntity<byte[]> getImage(Long id) {
-        Optional<News> news = newsRepository.findById(id);
+        Optional<Image> img = imageRepository.findById(id);
         try {
-            if (!news.isPresent()) {
+            if (!img.isPresent()) {
                 return new HttpEntity(HttpStatus.NOT_FOUND);
             }
-            File image = new File(news.get().getImg());
+            File image = new File(img.get().getPath());
             return new HttpEntity<>(getBytes(image));
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,6 +96,6 @@ public class NewsService {
     }
 
     public ResponseEntity getAll() {
-       return ResponseEntity.ok(newsRepository.findAll());
+        return ResponseEntity.ok(newsRepository.findAllByOrderByIdDesc());
     }
 }
