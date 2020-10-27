@@ -25,7 +25,7 @@ public class NewsController {
         return newsService.upload(head, text, file);
     }
 
-    @GetMapping("/getImage")
+    @RequestMapping("/getImage")
     public HttpEntity<byte[]> getImage(@RequestParam("id") Long id) throws IOException {
         return newsService.getImage(id);
     }
