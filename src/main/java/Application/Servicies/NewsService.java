@@ -35,10 +35,10 @@ public class NewsService {
             newFile.mkdirs();
         }
 
-        if (file.isEmpty()) {
-            Optional<Image> image = imageRepository.findById((long) 1);
-            news = new News(head, text, image.get().getId(), date);
-
+        if (file == null) {
+            news = getNewsWithDefaultImage(head, text, date);
+        } else if (file.isEmpty()) {
+            news = getNewsWithDefaultImage(head, text, date);
         } else {
             newFile = new File(newFile, file.getOriginalFilename());
 
@@ -57,6 +57,12 @@ public class NewsService {
         }
         newsRepository.save(news);
         return new ResponseEntity<>(news.getId().toString(), HttpStatus.OK);
+    }
+
+    public News getNewsWithDefaultImage(String head, String text, String date) {
+        Optional<Image> image = imageRepository.findById((long) 1);
+        News DefaultNews = new News(head, text, image.get().getId(), date);
+        return DefaultNews;
     }
 
     public HttpEntity<byte[]> getImage(Long id) {
