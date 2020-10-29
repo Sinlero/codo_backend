@@ -59,10 +59,24 @@ public class NewsService {
         return new ResponseEntity<>(news.getId().toString(), HttpStatus.OK);
     }
 
+    public ResponseEntity<String> deleteNewsById(Long id) {
+        Optional<News> news = newsRepository.findById(id);
+        if (!news.isPresent()) {
+            return new ResponseEntity<>("News not found", HttpStatus.NOT_FOUND);
+        }
+        Optional<Image> imageEntity = imageRepository.findById(news.get().getImgId());
+        if (imageEntity.get().getId() != 1) {
+            File image = new File(imageEntity.get().getPath());
+            image.delete();
+            imageRepository.deleteById(imageEntity.get().getId());
+        }
+        newsRepository.deleteById(id);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
     public News getNewsWithDefaultImage(String head, String text, String date) {
         Optional<Image> image = imageRepository.findById((long) 1);
-        News DefaultNews = new News(head, text, image.get().getId(), date);
-        return DefaultNews;
+        return new News(head, text, image.get().getId(), date);
     }
 
     public HttpEntity<byte[]> getImage(Long id) {
