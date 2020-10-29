@@ -30,6 +30,12 @@ public class NewsController {
         return newsService.deleteNewsById(id);
     }
 
+    @RequestMapping("/update")
+    public ResponseEntity<String> update(@RequestParam Long id, @RequestParam String head,
+                                         @RequestParam String text) {
+        return newsService.updateNews(id, head, text);
+    }
+
     @RequestMapping("/getImage")
     public HttpEntity<byte[]> getImage(@RequestParam("id") Long id) throws IOException {
         return newsService.getImage(id);
