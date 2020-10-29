@@ -93,6 +93,17 @@ public class NewsService {
         }
     }
 
+    public ResponseEntity<String> updateNews(Long id, String head, String text) {
+        Optional<News> news = newsRepository.findById(id);
+        if (!news.isPresent()) {
+            return new ResponseEntity<>("News with this id not found", HttpStatus.NOT_FOUND);
+        }
+        news.get().setHead(head);
+        news.get().setText(text);
+        newsRepository.save(news.get());
+        return new ResponseEntity<>("News updated", HttpStatus.OK);
+    }
+
     public byte[] getBytes(File file) throws IOException {
         long length = file.length();
         if (length > Integer.MAX_VALUE) {
