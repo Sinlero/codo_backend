@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface NewsRepository extends CrudRepository<News, Long> {
 
-    Optional<News> findById(Long id);
+//    Optional<News> findById(Long id);
 
     List<News> findAllByOrderByIdDesc();
 }
