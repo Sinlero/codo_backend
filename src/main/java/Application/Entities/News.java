@@ -16,7 +16,7 @@ public class News {
     private Long id;
     private String head;
     private String text;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Image image;
     private String date;
 
