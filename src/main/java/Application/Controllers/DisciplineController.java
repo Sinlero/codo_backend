@@ -1,7 +1,6 @@
 package Application.Controllers;
 
 import Application.Servicies.DisciplineService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,8 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/discipline")
 public class DisciplineController {
 
-    @Autowired
     DisciplineService disciplineService;
+
+    public DisciplineController(DisciplineService disciplineService) {
+        this.disciplineService = disciplineService;
+    }
 
     @RequestMapping("/getAllDisciplines")
     public ResponseEntity getAllDisciplines() {

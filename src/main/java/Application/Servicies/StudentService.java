@@ -4,7 +4,6 @@ import Application.Entities.Discipline;
 import Application.Entities.Student;
 import Application.Repositories.DisciplineRepository;
 import Application.Repositories.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,11 +11,13 @@ import java.util.*;
 @Service
 public class StudentService {
 
-    @Autowired
     StudentRepository studentRepository;
-
-    @Autowired
     DisciplineRepository disciplineRepository;
+
+    public StudentService(StudentRepository studentRepository, DisciplineRepository disciplineRepository) {
+        this.studentRepository = studentRepository;
+        this.disciplineRepository = disciplineRepository;
+    }
 
     public Set<Discipline> getDisciplinesByStudentId(Long id) {
         Optional<Student> student = studentRepository.findById(id);

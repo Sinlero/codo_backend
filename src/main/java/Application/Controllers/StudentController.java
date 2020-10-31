@@ -3,7 +3,6 @@ package Application.Controllers;
 import Application.Entities.Student;
 import Application.Models.DisciplinesUpdate;
 import Application.Servicies.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/student")
 public class StudentController {
 
-    @Autowired
     StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @RequestMapping("/getDisciplinesById")
     public ResponseEntity getDisciplinesById(@RequestParam Long id) {
