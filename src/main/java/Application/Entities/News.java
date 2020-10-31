@@ -16,13 +16,14 @@ public class News {
     private Long id;
     private String head;
     private String text;
-    private Long imgId;
+    @OneToOne
+    private Image image;
     private String date;
 
-    public News(String head, String text, Long imgId, String date) {
+    public News(String head, String text, Image image, String date) {
         this.head = head;
         this.text = text;
-        this.imgId = imgId;
+        this.image = image;
         this.date = date;
     }
 }
