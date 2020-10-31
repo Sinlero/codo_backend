@@ -53,7 +53,7 @@ public class NewsService {
 
             Image image = new Image(newFile.getAbsolutePath());
             imageRepository.save(image);
-            news = new News(head, text, image.getId(), date);
+            news = new News(head, text, image, date);
         }
         newsRepository.save(news);
         return new ResponseEntity<>(news.getId().toString(), HttpStatus.OK);
@@ -61,18 +61,18 @@ public class NewsService {
 
     public News getNewsWithDefaultImage(String head, String text, String date) {
         Optional<Image> image = imageRepository.findById((long) 1);
-        News DefaultNews = new News(head, text, image.get().getId(), date);
+        News DefaultNews = new News(head, text, image.get(), date);
         return DefaultNews;
     }
 
     public HttpEntity<byte[]> getImage(Long id) {
-        Optional<Image> img = imageRepository.findById(id);
+        Optional<Image> image = imageRepository.findById(id);
         try {
-            if (!img.isPresent()) {
+            if (!image.isPresent()) {
                 return new HttpEntity(HttpStatus.NOT_FOUND);
             }
-            File image = new File(img.get().getPath());
-            return new HttpEntity<>(getBytes(image));
+            File imageFile = new File(image.get().getPath());
+            return new HttpEntity<>(getBytes(imageFile));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
