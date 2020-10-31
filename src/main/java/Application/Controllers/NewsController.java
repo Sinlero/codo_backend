@@ -23,6 +23,17 @@ public class NewsController {
         return newsService.upload(head, text, file);
     }
 
+    @RequestMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam Long id) {
+        return newsService.deleteNewsById(id);
+    }
+
+    @RequestMapping("/update")
+    public ResponseEntity<String> update(@RequestParam Long id, @RequestParam String head,
+                                         @RequestParam String text) {
+        return newsService.updateNews(id, head, text);
+    }
+
     @RequestMapping("/getImage")
     public HttpEntity<byte[]> getImage(@RequestParam("id") Long id) {
         return newsService.getImage(id);
