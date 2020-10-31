@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @RestController
 @RequestMapping("/news")
 public class NewsController {
@@ -26,7 +24,7 @@ public class NewsController {
     }
 
     @RequestMapping("/getImage")
-    public HttpEntity<byte[]> getImage(@RequestParam("id") Long id) throws IOException {
+    public HttpEntity<byte[]> getImage(@RequestParam("id") Long id) {
         return newsService.getImage(id);
     }
 
