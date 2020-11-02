@@ -16,6 +16,8 @@ import java.util.Set;
 public class Student extends User{
     private BigDecimal balance;
     private String course;
+    private String parentFio;
+    private String phoneNumber;
     @ManyToMany
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     Set<Discipline> disciplines;
