@@ -68,7 +68,6 @@ public class NewsService {
         if (imageEntity.get().getId() != 1) {
             File image = new File(imageEntity.get().getPath());
             image.delete();
-            imageRepository.deleteById(imageEntity.get().getId());
         }
         newsRepository.deleteById(id);
         return new ResponseEntity<>("Success", HttpStatus.OK);
