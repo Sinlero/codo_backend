@@ -64,12 +64,13 @@ public class NewsService {
         if (!news.isPresent()) {
             return new ResponseEntity<>("News not found", HttpStatus.NOT_FOUND);
         }
+        newsRepository.deleteById(id);
         Optional<Image> imageEntity = imageRepository.findById(news.get().getImage().getId());
         if (imageEntity.get().getId() != 1) {
             File image = new File(imageEntity.get().getPath());
             image.delete();
+            imageRepository.deleteById(imageEntity.get().getId());
         }
-        newsRepository.deleteById(id);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
