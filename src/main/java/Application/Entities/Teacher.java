@@ -8,6 +8,6 @@ import javax.persistence.Entity;
 
 @Entity(name = "teachers")
 @Data
-public class Teacher extends User {
+public class Teacher extends AbstractUser {
 
 }

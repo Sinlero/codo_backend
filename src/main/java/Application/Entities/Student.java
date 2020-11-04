@@ -13,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Student extends User{
+public class Student extends AbstractUser {
     private BigDecimal balance;
     private String course;
     private String parentFio;
