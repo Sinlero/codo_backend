@@ -45,4 +45,9 @@ public class NewsController {
     public ResponseEntity getAllNews() {
         return newsService.getAll();
     }
+
+    @RequestMapping("/getById")
+    public String getNewsById(@RequestParam Long id) {
+        return newsService.getFullTextNewsById(id);
+    }
 }

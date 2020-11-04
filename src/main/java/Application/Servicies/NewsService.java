@@ -132,4 +132,14 @@ public class NewsService {
     public ResponseEntity getAll() {
         return ResponseEntity.ok(newsRepository.findAllByOrderByIdDesc());
     }
+
+    public String getFullTextNewsById(Long id) {
+        Optional<News> news = newsRepository.findById(id);
+        if (!news.isPresent()) {
+            return "News with this id not found";
+        } else {
+            return news.get().getFullText();
+        }
+    }
+
 }
