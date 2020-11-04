@@ -17,15 +17,17 @@ import java.util.Optional;
 @Service
 public class NewsService {
 
-    NewsRepository newsRepository;
-    ImageRepository imageRepository;
+    private NewsRepository newsRepository;
+    private ImageRepository imageRepository;
 
     NewsService(NewsRepository newsRepository, ImageRepository imageRepository) {
         this.newsRepository = newsRepository;
         this.imageRepository = imageRepository;
     }
 
-    public ResponseEntity<String> upload(String head, String text, MultipartFile file) {
+
+
+    public ResponseEntity<String> upload(MultipartFile file, String head, String previewText, String fullText) {
         File newFile = new File(System.getProperty("user.dir") + "/NewsImages/");
         String date = LocalDateTime.now().getDayOfMonth() + "." + LocalDateTime.now().getMonth().getValue() + "." +
                 LocalDateTime.now().getYear();
@@ -36,9 +38,9 @@ public class NewsService {
         }
 
         if (file == null) {
-            news = getNewsWithDefaultImage(head, text, date);
+            news = getNewsWithDefaultImage(head, previewText, fullText, date);
         } else if (file.isEmpty()) {
-            news = getNewsWithDefaultImage(head, text, date);
+            news = getNewsWithDefaultImage(head, previewText, fullText, date);
         } else {
             newFile = new File(newFile, file.getOriginalFilename());
 
@@ -53,7 +55,7 @@ public class NewsService {
 
             Image image = new Image(newFile.getAbsolutePath());
             imageRepository.save(image);
-            news = new News(head, text, image, date);
+            news = new News(head, previewText, fullText, image, date);
         }
         newsRepository.save(news);
         return new ResponseEntity<>(news.getId().toString(), HttpStatus.OK);
@@ -74,21 +76,21 @@ public class NewsService {
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> updateNews(Long id, String head, String text) {
+    public ResponseEntity<String> updateNews(Long id, String head, String previewText, String fullText) {
         Optional<News> news = newsRepository.findById(id);
         if (!news.isPresent()) {
             return new ResponseEntity<>("News with this id not found", HttpStatus.NOT_FOUND);
         }
         news.get().setHead(head);
-        news.get().setText(text);
+        news.get().setPreviewText(previewText);
+        news.get().setFullText(fullText);
         newsRepository.save(news.get());
         return new ResponseEntity<>("News updated", HttpStatus.OK);
     }
 
-    public News getNewsWithDefaultImage(String head, String text, String date) {
+    public News getNewsWithDefaultImage(String head, String previewText, String fullText, String date) {
         Optional<Image> image = imageRepository.findById((long) 1);
-        News DefaultNews = new News(head, text, image.get(), date);
-        return DefaultNews;
+        return new News(head, previewText, fullText, image.get(), date);
     }
 
     public HttpEntity<byte[]> getImage(Long id) {

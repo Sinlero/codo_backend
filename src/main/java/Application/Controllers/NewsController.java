@@ -19,8 +19,9 @@ public class NewsController {
     @RequestMapping("/upload")
     @ResponseBody
     public ResponseEntity<String> upload(@RequestParam(required = false) MultipartFile file, @RequestParam String head,
-                                         @RequestParam String text) {
-        return newsService.upload(head, text, file);
+                                         @RequestParam String previewText,
+                                         @RequestParam(required = false) String fullText) {
+        return newsService.upload(file, head, previewText, fullText);
     }
 
     @RequestMapping("/delete")
@@ -30,8 +31,9 @@ public class NewsController {
 
     @RequestMapping("/update")
     public ResponseEntity<String> update(@RequestParam Long id, @RequestParam String head,
-                                         @RequestParam String text) {
-        return newsService.updateNews(id, head, text);
+                                         @RequestParam String previewText,
+                                         @RequestParam(required = false) String fullText) {
+        return newsService.updateNews(id, head, previewText, fullText);
     }
 
     @RequestMapping("/getImage")
