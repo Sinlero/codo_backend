@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 public abstract class AbstractEvent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private Long id;
-    private String head;
-    private String previewText;
-    private String fullText;
+    protected Long id;
+    protected String head;
+    protected String previewText;
+    protected String fullText;
     @OneToOne
-    private Image image;
-    private LocalDateTime date;
+    protected Image image;
+    protected String date;
 }
