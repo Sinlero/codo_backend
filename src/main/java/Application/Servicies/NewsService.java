@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class NewsService {
@@ -43,7 +44,11 @@ public class NewsService {
             news = getNewsWithDefaultImage(head, previewText, fullText, date);
         } else {
             newFile = new File(newFile, file.getOriginalFilename());
-
+            if (newFile.exists()) {
+                String extension = newFile.getName().substring(newFile.getName().lastIndexOf("."));
+                String nameOfFile = UUID.randomUUID().toString().concat(extension);
+                newFile = new File((newFile.getParent().concat(File.separator)).concat(nameOfFile));
+            }
             try {
                 FileOutputStream stream = new FileOutputStream(newFile);
                 stream.write(file.getBytes());
@@ -52,7 +57,6 @@ public class NewsService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             Image image = new Image(newFile.getAbsolutePath());
             imageRepository.save(image);
             news = new News(head, previewText, fullText, image, date);
