@@ -50,4 +50,9 @@ public class NewsController {
     public String getNewsById(@RequestParam Long id) {
         return newsService.getFullTextNewsById(id);
     }
+
+    @RequestMapping("/getFullTextById")
+    public String getFullTextById(@RequestParam Long id) {
+        return newsService.getFullTextNewsById(id);
+    }
 }
