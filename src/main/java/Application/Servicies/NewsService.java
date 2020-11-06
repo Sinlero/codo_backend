@@ -43,26 +43,31 @@ public class NewsService {
         } else if (file.isEmpty()) {
             news = getNewsWithDefaultImage(head, previewText, fullText, date);
         } else {
-            newFile = new File(newFile, file.getOriginalFilename());
-            if (newFile.exists()) {
-                String extension = newFile.getName().substring(newFile.getName().lastIndexOf("."));
-                String nameOfFile = UUID.randomUUID().toString().concat(extension);
-                newFile = new File((newFile.getParent().concat(File.separator)).concat(nameOfFile));
-            }
-            try {
-                FileOutputStream stream = new FileOutputStream(newFile);
-                stream.write(file.getBytes());
-                stream.flush();
-                stream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            newFile = NewsService.saveImage(newFile, file);
             Image image = new Image(newFile.getAbsolutePath());
             imageRepository.save(image);
             news = new News(head, previewText, fullText, image, date);
         }
         newsRepository.save(news);
         return new ResponseEntity<>(news.getId().toString(), HttpStatus.OK);
+    }
+
+    public static File saveImage(File newFile, MultipartFile file) {
+        newFile = new File(newFile, file.getOriginalFilename());
+        if (newFile.exists()) {
+            String extension = newFile.getName().substring(newFile.getName().lastIndexOf("."));
+            String nameOfFile = UUID.randomUUID().toString().concat(extension);
+            newFile = new File((newFile.getParent().concat(File.separator)).concat(nameOfFile));
+        }
+        try {
+            FileOutputStream stream = new FileOutputStream(newFile);
+            stream.write(file.getBytes());
+            stream.flush();
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return newFile;
     }
 
     public ResponseEntity<String> deleteNewsById(Long id) {
@@ -73,10 +78,8 @@ public class NewsService {
         newsRepository.deleteById(id);
         Optional<Image> imageEntity = imageRepository.findById(news.get().getImage().getId());
         if (imageEntity.get().getId() != 1) {
-            if (imageRepository.countByPath(imageEntity.get().getPath()) <= 1) {
-                File image = new File(imageEntity.get().getPath());
-                image.delete();
-            }
+            File image = new File(imageEntity.get().getPath());
+            image.delete();
             imageRepository.deleteById(imageEntity.get().getId());
         }
         return new ResponseEntity<>("Success", HttpStatus.OK);
