@@ -17,14 +17,14 @@ public class ImageService {
     }
 
     public Long uploadImage(MultipartFile file) {
-        File newFile = new File(System.getProperty("user.dir") + "/NewsImages/");
+        File newFile = new File(String.valueOf(FileService.FILES_PATH));
         if (!newFile.exists()) {
             newFile.mkdirs();
         }
         if (file == null) {
             return null;
         } else {
-            newFile = NewsService.saveImage(newFile, file);
+            newFile = FileService.saveImage(newFile, file);
             Image image = new Image(newFile.getAbsolutePath());
             imageRepository.save(image);
             return image.getId();
