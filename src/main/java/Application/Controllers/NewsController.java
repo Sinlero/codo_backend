@@ -1,10 +1,13 @@
 package Application.Controllers;
 
+import Application.Entities.News;
 import Application.Servicies.NewsService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/news")
@@ -47,8 +50,8 @@ public class NewsController {
     }
 
     @RequestMapping("/getById")
-    public String getNewsById(@RequestParam Long id) {
-        return newsService.getFullTextNewsById(id);
+    public ResponseEntity<Optional<News>> getNewsById(@RequestParam Long id) {
+        return newsService.getNewsById(id);
     }
 
     @RequestMapping("/getFullTextById")

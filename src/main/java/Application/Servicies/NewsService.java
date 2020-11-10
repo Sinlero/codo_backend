@@ -94,6 +94,15 @@ public class NewsService {
         return ResponseEntity.ok(newsRepository.findAllByOrderByIdDesc());
     }
 
+
+    public ResponseEntity<Optional<News>> getNewsById(Long id) {
+        Optional<News> news = newsRepository.findById(id);
+        if (!news.isPresent()) {
+            return null;
+        }
+        return ResponseEntity.ok(news);
+    }
+
     public String getFullTextNewsById(Long id) {
         Optional<News> news = newsRepository.findById(id);
         if (!news.isPresent()) {
