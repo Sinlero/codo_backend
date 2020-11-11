@@ -82,6 +82,9 @@ public class FileService {
         }
         List<Image> images = (List<Image>) imageRepository.findAll();
         for (Image image : images) {
+            if (image.getId() == 1) {
+                continue;
+            }
             if (!allId.contains(image.getId())) {
                 delete(image);
             }
