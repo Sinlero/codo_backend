@@ -1,15 +1,29 @@
 package Application.Servicies;
 
+import Application.Entities.Image;
+import Application.Entities.News;
+import Application.Repositories.ImageRepository;
+import Application.Repositories.NewsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.UUID;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class FileService {
 
     public static final File FILES_PATH = new File(System.getProperty("user.dir") + "/Images/");
+
+    private NewsRepository newsRepository;
+    private ImageRepository imageRepository;
+
+    public FileService(NewsRepository newsRepository, ImageRepository imageRepository) {
+        this.newsRepository = newsRepository;
+        this.imageRepository = imageRepository;
+    }
 
     public static boolean init() {
         File newFile = new File(String.valueOf(FILES_PATH));
@@ -57,5 +71,36 @@ public class FileService {
             throw new IOException("Could not completely read file " + file.getName());
         }
         return bytes;
+    }
+
+    public void test() {
+        TreeSet<Long> allId = new TreeSet<>();
+        List<News> newses = newsRepository.findAll();
+        for (News news : newses) {
+            allId.add(news.getImage().getId());
+            allId.addAll(getImagesId(news.getFullText()));
+        }
+        List<Image> images = (List<Image>) imageRepository.findAll();
+        for (Image image : images) {
+            if (!allId.contains(image.getId())) {
+                delete(image);
+            }
+        }
+    }
+
+    private void delete(Image image) {
+        File file = new File(image.getPath());
+        file.delete();
+        imageRepository.deleteById(image.getId());
+    }
+
+    private TreeSet<Long> getImagesId(String fullText) {
+        TreeSet<Long> imagesId = new TreeSet<>();
+        Pattern pattern = Pattern.compile("getImage\\?id=(\\d+)\"");
+        Matcher matcher = pattern.matcher(fullText);
+        while (matcher.find()) {
+            imagesId.add(Long.parseLong(matcher.group(1)));
+        }
+        return imagesId;
     }
 }
