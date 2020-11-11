@@ -1,6 +1,7 @@
 package Application.Controllers;
 
 import Application.Entities.News;
+import Application.Servicies.FileService;
 import Application.Servicies.NewsService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,11 @@ import java.util.Optional;
 public class NewsController {
 
     private NewsService newsService;
+    private FileService fileService;
 
-    public NewsController(NewsService newsService) {
+    public NewsController(NewsService newsService, FileService fileService) {
         this.newsService = newsService;
+        this.fileService = fileService;
     }
 
     @RequestMapping("/upload")
@@ -57,5 +60,10 @@ public class NewsController {
     @RequestMapping("/getFullTextById")
     public String getFullTextById(@RequestParam Long id) {
         return newsService.getFullTextNewsById(id);
+    }
+
+    @RequestMapping("/test")
+    public void test() {
+        fileService.test();
     }
 }
