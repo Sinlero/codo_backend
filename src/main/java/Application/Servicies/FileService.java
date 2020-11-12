@@ -4,6 +4,7 @@ import Application.Entities.Image;
 import Application.Entities.News;
 import Application.Repositories.ImageRepository;
 import Application.Repositories.NewsRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -73,6 +74,7 @@ public class FileService {
         return bytes;
     }
 
+    @Scheduled(cron = "0 0 0 * * ?")
     public void test() {
         TreeSet<Long> allId = new TreeSet<>();
         List<News> newses = newsRepository.findAll();
