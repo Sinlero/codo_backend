@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @MappedSuperclass
 @Data
@@ -20,5 +20,5 @@ public abstract class AbstractEvent {
     protected String fullText;
     @OneToOne
     protected Image image;
-    protected String date;
+    protected LocalDate date;
 }

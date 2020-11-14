@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -27,8 +27,7 @@ public class NewsService {
 
     public ResponseEntity<String> upload(MultipartFile file, String head, String previewText, String fullText) {
         File newFile = new File(String.valueOf(FileService.FILES_PATH));
-        String date = LocalDateTime.now().getDayOfMonth() + "." + LocalDateTime.now().getMonth().getValue() + "." +
-                LocalDateTime.now().getYear();
+        LocalDate date = LocalDate.now();
         News news;
         if (file == null) {
             news = getNewsWithDefaultImage(head, previewText, fullText, date);
@@ -71,7 +70,7 @@ public class NewsService {
         return new ResponseEntity<>("News updated", HttpStatus.OK);
     }
 
-    public News getNewsWithDefaultImage(String head, String previewText, String fullText, String date) {
+    public News getNewsWithDefaultImage(String head, String previewText, String fullText, LocalDate date) {
         Optional<Image> image = imageRepository.findById((long) 1);
         return new News(head, previewText, fullText, image.get(), date);
     }
