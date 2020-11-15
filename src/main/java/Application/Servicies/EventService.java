@@ -81,7 +81,7 @@ public class EventService {
 
     public ResponseEntity getActual() {
         LocalDate date = LocalDate.now();
-        return ResponseEntity.ok(eventRepository.findEventsByDateGreaterThanEqual(date));
+        return ResponseEntity.ok(eventRepository.findEventsByDateGreaterThanEqualOrderByDateAsc(date));
     }
 
     public ResponseEntity<Optional<Event>> getById(Long id) {
