@@ -14,5 +14,5 @@ public interface EventRepository extends CrudRepository<Event, Long> {
     // List<Event> findEventsByDateLess(LocalDate date);
 
     // actual events
-    List<Event> findEventsByDateGreaterThanEqual(LocalDate date);
+    List<Event> findEventsByDateGreaterThanEqualOrderByDateAsc(LocalDate date);
 }
