@@ -1,9 +1,7 @@
 package Application.Controllers;
 
 import Application.Entities.News;
-import Application.Servicies.FileService;
 import Application.Servicies.NewsService;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,55 +13,42 @@ import java.util.Optional;
 public class NewsController {
 
     private NewsService newsService;
-    private FileService fileService;
 
-    public NewsController(NewsService newsService, FileService fileService) {
+    public NewsController(NewsService newsService) {
         this.newsService = newsService;
-        this.fileService = fileService;
     }
 
     @RequestMapping("/upload")
     @ResponseBody
     public ResponseEntity<String> upload(@RequestParam(required = false) MultipartFile file, @RequestParam String head,
-                                         @RequestParam String previewText,
-                                         @RequestParam(required = false) String fullText) {
+                                         @RequestParam String previewText, @RequestParam String fullText) {
         return newsService.upload(file, head, previewText, fullText);
     }
 
-    @RequestMapping("/delete")
-    public ResponseEntity<String> delete(@RequestParam Long id) {
-        return newsService.deleteNewsById(id);
+    @RequestMapping("/{id}/delete")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        return newsService.delete(id);
     }
 
-    @RequestMapping("/update")
-    public ResponseEntity<String> update(@RequestParam Long id, @RequestParam String head,
+    @RequestMapping("/{id}/update")
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestParam String head,
                                          @RequestParam String previewText,
-                                         @RequestParam(required = false) String fullText) {
-        return newsService.updateNews(id, head, previewText, fullText);
-    }
-
-    @RequestMapping("/getImage")
-    public HttpEntity<byte[]> getImage(@RequestParam("id") Long id) {
-        return newsService.getImage(id);
+                                         @RequestParam String fullText) {
+        return newsService.update(id, head, previewText, fullText);
     }
 
     @RequestMapping("/getAll")
-    public ResponseEntity getAllNews() {
+    public ResponseEntity getAll() {
         return newsService.getAll();
     }
 
-    @RequestMapping("/getById")
-    public ResponseEntity<Optional<News>> getNewsById(@RequestParam Long id) {
-        return newsService.getNewsById(id);
+    @RequestMapping("/{id}")
+    public ResponseEntity<Optional<News>> getById(@PathVariable Long id) {
+        return newsService.getById(id);
     }
 
-    @RequestMapping("/getFullTextById")
-    public String getFullTextById(@RequestParam Long id) {
-        return newsService.getFullTextNewsById(id);
-    }
-
-    @RequestMapping("/test")
-    public void test() {
-        fileService.test();
+    @RequestMapping("/{id}/fullText")
+    public String getFullText(@PathVariable Long id) {
+        return newsService.getFullText(id);
     }
 }

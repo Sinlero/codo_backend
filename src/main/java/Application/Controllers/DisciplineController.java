@@ -15,8 +15,8 @@ public class DisciplineController {
         this.disciplineService = disciplineService;
     }
 
-    @RequestMapping("/getAllDisciplines")
-    public ResponseEntity getAllDisciplines() {
-        return ResponseEntity.ok(disciplineService.getAllDisciplines());
+    @RequestMapping("/getAll")
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok(disciplineService.getAll());
     }
 }

@@ -16,8 +16,8 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @RequestMapping("/getDisciplinesById")
-    public ResponseEntity getDisciplinesById(@RequestParam Long id) {
+    @RequestMapping("/{id}/getDisciplines")
+    public ResponseEntity getDisciplinesById(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.getDisciplinesByStudentId(id));
     }
 
@@ -33,7 +33,7 @@ public class StudentController {
         return studentService.deleteDisciplinesOfStudent(update.getUserId(), update.getDisciplines());
     }
 
-    @RequestMapping("/getAllStudents")
+    @RequestMapping("/getAll")
     public ResponseEntity getAllStudents() {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
@@ -44,8 +44,8 @@ public class StudentController {
         return studentService.addStudent(newStudent);
     }
 
-    @RequestMapping("/deleteStudentById")
-    public String deleteStudent(@RequestParam Long id) {
+    @RequestMapping("/{id}/delete")
+    public String deleteStudent(@PathVariable Long id) {
         return studentService.deleteStudent(id);
     }
 
