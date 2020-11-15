@@ -15,7 +15,7 @@ public class DisciplineService {
         this.disciplineRepository = disciplineRepository;
     }
 
-    public List<Discipline> getAllDisciplines(){
+    public List<Discipline> getAll(){
         return (List<Discipline>) disciplineRepository.findAll();
     }
 

@@ -75,7 +75,7 @@ public class FileService {
     }
 
     @Scheduled(cron = "0 0 0 * * ?")
-    public void test() {
+    public void cleaningPictures() {
         TreeSet<Long> allId = new TreeSet<>();
         List<News> newses = newsRepository.findAll();
         for (News news : newses) {
@@ -93,7 +93,7 @@ public class FileService {
         }
     }
 
-    private void delete(Image image) {
+    public void delete(Image image) {
         File file = new File(image.getPath());
         file.delete();
         imageRepository.deleteById(image.getId());
