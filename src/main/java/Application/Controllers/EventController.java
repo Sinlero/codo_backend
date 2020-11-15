@@ -30,8 +30,8 @@ public class EventController {
         return eventService.deleteById(id);
     }
 
-    @RequestMapping("/{id}/update")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestParam String head,
+    @RequestMapping("/update")
+    public ResponseEntity<String> update(@RequestParam Long id, @RequestParam String head,
                                          @RequestParam String previewText,
                                          @RequestParam String fullText) {
         return eventService.update(id, head, previewText, fullText);
