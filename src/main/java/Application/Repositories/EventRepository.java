@@ -10,9 +10,8 @@ import java.util.List;
 @Repository
 public interface EventRepository extends CrudRepository<Event, Long> {
 
-    // irrelevant events
-    // List<Event> findEventsByDateLess(LocalDate date);
-
-    // actual events
     List<Event> findEventsByDateGreaterThanEqualOrderByDateAsc(LocalDate date);
+
+    @Override
+    List<Event> findAll();
 }
