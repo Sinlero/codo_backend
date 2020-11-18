@@ -11,5 +11,6 @@ public interface NewsRepository extends CrudRepository<News, Long> {
 
     List<News> findAllByOrderByIdDesc();
 
+    @Override
     List<News> findAll();
 }
