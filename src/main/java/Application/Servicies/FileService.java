@@ -1,7 +1,9 @@
 package Application.Servicies;
 
+import Application.Entities.Event;
 import Application.Entities.Image;
 import Application.Entities.News;
+import Application.Repositories.EventRepository;
 import Application.Repositories.ImageRepository;
 import Application.Repositories.NewsRepository;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,10 +22,12 @@ public class FileService {
 
     private NewsRepository newsRepository;
     private ImageRepository imageRepository;
+    private EventRepository eventRepository;
 
-    public FileService(NewsRepository newsRepository, ImageRepository imageRepository) {
+    public FileService(NewsRepository newsRepository, ImageRepository imageRepository, EventRepository eventRepository) {
         this.newsRepository = newsRepository;
         this.imageRepository = imageRepository;
+        this.eventRepository = eventRepository;
     }
 
     public static boolean init() {
@@ -76,11 +80,16 @@ public class FileService {
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void cleaningPictures() {
+        System.out.println("Cleaning images");
         TreeSet<Long> allId = new TreeSet<>();
         List<News> newses = newsRepository.findAll();
+        List<Event> events = eventRepository.findAll();
         for (News news : newses) {
             allId.add(news.getImage().getId());
             allId.addAll(getImagesId(news.getFullText()));
+        }
+        for (Event event : events) {
+            allId.add(event.getImage().getId());
         }
         List<Image> images = (List<Image>) imageRepository.findAll();
         for (Image image : images) {
