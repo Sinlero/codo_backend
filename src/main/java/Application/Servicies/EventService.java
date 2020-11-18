@@ -70,7 +70,7 @@ public class EventService {
         return new ResponseEntity<>("Event updated", HttpStatus.OK);
     }
 
-    public Event getEventWithDefaultImage(String head, String previewText, String fullText, LocalDate date) {
+    private Event getEventWithDefaultImage(String head, String previewText, String fullText, LocalDate date) {
         Optional<Image> image = imageRepository.findById((long) 1);
         return new Event(head, previewText, fullText, image.get(), date);
     }

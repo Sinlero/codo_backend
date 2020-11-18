@@ -69,7 +69,7 @@ public class NewsService {
         return new ResponseEntity<>("News updated", HttpStatus.OK);
     }
 
-    public News getNewsWithDefaultImage(String head, String previewText, String fullText, LocalDate date) {
+    private News getNewsWithDefaultImage(String head, String previewText, String fullText, LocalDate date) {
         Optional<Image> image = imageRepository.findById((long) 1);
         return new News(head, previewText, fullText, image.get(), date);
     }
