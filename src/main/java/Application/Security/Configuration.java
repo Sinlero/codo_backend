@@ -1,9 +1,9 @@
 package Application.Security;
 
-import Application.Entities.Student;
-import Application.Entities.Teacher;
-import Application.Repositories.StudentRepository;
-import Application.Repositories.TeacherRepository;
+import Application.Entities.UserEntities.Student;
+import Application.Entities.UserEntities.Teacher;
+import Application.Data.Repositories.StudentRepository;
+import Application.Data.Repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;

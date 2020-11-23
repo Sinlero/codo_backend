@@ -1,5 +1,6 @@
-package Application.Entities;
+package Application.Entities.EventEntities;
 
+import Application.Entities.Image;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

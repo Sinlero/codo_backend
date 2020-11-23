@@ -1,11 +1,11 @@
 package Application.Servicies;
 
-import Application.Entities.Event;
+import Application.Entities.EventEntities.Event;
 import Application.Entities.Image;
-import Application.Entities.News;
-import Application.Repositories.EventRepository;
-import Application.Repositories.ImageRepository;
-import Application.Repositories.NewsRepository;
+import Application.Entities.EventEntities.News;
+import Application.Data.Repositories.EventRepository;
+import Application.Data.Repositories.ImageRepository;
+import Application.Data.Repositories.NewsRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

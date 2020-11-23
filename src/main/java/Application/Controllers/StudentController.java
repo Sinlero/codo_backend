@@ -1,7 +1,7 @@
 package Application.Controllers;
 
-import Application.Entities.Student;
-import Application.Models.DisciplinesUpdate;
+import Application.Entities.UserEntities.Student;
+import Application.Data.DisciplinesUpdate;
 import Application.Servicies.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

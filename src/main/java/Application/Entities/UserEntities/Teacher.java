@@ -1,4 +1,4 @@
-package Application.Entities;
+package Application.Entities.UserEntities;
 
 import lombok.Data;
 

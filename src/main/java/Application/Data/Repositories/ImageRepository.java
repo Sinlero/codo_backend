@@ -1,4 +1,4 @@
-package Application.Repositories;
+package Application.Data.Repositories;
 
 import Application.Entities.Image;
 import org.springframework.data.repository.CrudRepository;

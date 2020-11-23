@@ -1,4 +1,4 @@
-package Application.Entities;
+package Application.Entities.UserEntities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

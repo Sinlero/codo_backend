@@ -1,7 +1,7 @@
 package Application.Servicies;
 
 import Application.Entities.Image;
-import Application.Repositories.ImageRepository;
+import Application.Data.Repositories.ImageRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

@@ -1,9 +1,9 @@
 package Application.Servicies;
 
 import Application.Entities.Discipline;
-import Application.Entities.Student;
-import Application.Repositories.DisciplineRepository;
-import Application.Repositories.StudentRepository;
+import Application.Entities.UserEntities.Student;
+import Application.Data.Repositories.DisciplineRepository;
+import Application.Data.Repositories.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

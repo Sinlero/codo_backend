@@ -1,6 +1,6 @@
-package Application.Repositories;
+package Application.Data.Repositories;
 
-import Application.Entities.News;
+import Application.Entities.EventEntities.News;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

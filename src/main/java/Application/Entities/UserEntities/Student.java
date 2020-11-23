@@ -1,5 +1,6 @@
-package Application.Entities;
+package Application.Entities.UserEntities;
 
+import Application.Entities.Discipline;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package Application.Servicies;
 
 import Application.Entities.Discipline;
-import Application.Repositories.DisciplineRepository;
+import Application.Data.Repositories.DisciplineRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

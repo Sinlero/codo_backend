@@ -1,6 +1,6 @@
-package Application.Repositories;
+package Application.Data.Repositories;
 
-import Application.Entities.Teacher;
+import Application.Entities.UserEntities.Teacher;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
