@@ -4,6 +4,7 @@ import Application.Entities.Discipline;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Student extends AbstractUser {
     private BigDecimal balance;
     private String course;
@@ -21,5 +23,5 @@ public class Student extends AbstractUser {
     private String phoneNumber;
     @ManyToMany
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    Set<Discipline> disciplines;
+    private Set<Discipline> disciplines;
 }
