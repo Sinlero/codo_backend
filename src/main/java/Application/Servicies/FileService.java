@@ -78,7 +78,7 @@ public class FileService {
         return bytes;
     }
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 59 15 * * ?")
     public void cleaningPictures() {
         System.out.println("Cleaning images");
         TreeSet<Long> allId = new TreeSet<>();
@@ -110,7 +110,7 @@ public class FileService {
 
     private TreeSet<Long> getImagesId(String fullText) {
         TreeSet<Long> imagesId = new TreeSet<>();
-        Pattern pattern = Pattern.compile("getImage\\?id=(\\d+)\"");
+        Pattern pattern = Pattern.compile("image\\/(\\d+)");
         Matcher matcher = pattern.matcher(fullText);
         while (matcher.find()) {
             imagesId.add(Long.parseLong(matcher.group(1)));
