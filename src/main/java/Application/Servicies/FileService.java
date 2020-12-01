@@ -78,7 +78,7 @@ public class FileService {
         return bytes;
     }
 
-    @Scheduled(cron = "0 59 15 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void cleaningPictures() {
         System.out.println("Cleaning images");
         TreeSet<Long> allId = new TreeSet<>();
@@ -90,6 +90,7 @@ public class FileService {
         }
         for (Event event : events) {
             allId.add(event.getImage().getId());
+            allId.addAll(getImagesId(event.getFullText()));
         }
         List<Image> images = (List<Image>) imageRepository.findAll();
         for (Image image : images) {
