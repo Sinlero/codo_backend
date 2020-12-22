@@ -1,9 +1,8 @@
 package Application.Servicies;
 
+import Application.Data.Repositories.*;
 import Application.Entities.Discipline;
 import Application.Entities.UserEntities.Student;
-import Application.Data.Repositories.DisciplineRepository;
-import Application.Data.Repositories.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,10 +12,15 @@ public class StudentService {
 
     StudentRepository studentRepository;
     DisciplineRepository disciplineRepository;
+    JournalRepository journalRepository;
+    LessonRepository lessonRepository;
 
-    public StudentService(StudentRepository studentRepository, DisciplineRepository disciplineRepository) {
+    public StudentService(StudentRepository studentRepository, DisciplineRepository disciplineRepository,
+                          JournalRepository journalRepository, LessonRepository lessonRepository) {
         this.studentRepository = studentRepository;
         this.disciplineRepository = disciplineRepository;
+        this.journalRepository = journalRepository;
+        this.lessonRepository = lessonRepository;
     }
 
     public Set<Discipline> getDisciplinesByStudentId(Long id) {
