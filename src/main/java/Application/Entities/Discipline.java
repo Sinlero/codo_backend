@@ -1,11 +1,13 @@
 package Application.Entities;
 
+import Application.Entities.UserEntities.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity(name = "disciplines")
 @Data
@@ -17,4 +19,7 @@ public class Discipline {
     private Long id;
     private String name;
     private BigDecimal cost;
+    private String classroom;
+    @OneToMany
+    private List<Teacher> teacher;
 }
