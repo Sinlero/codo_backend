@@ -2,7 +2,9 @@ package Application.Data.Repositories;
 
 import Application.Entities.Journal;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface JournalRepository extends CrudRepository<Journal,Long> {
+@Repository
+public interface JournalRepository extends CrudRepository<Journal, Long> {
 
 }
