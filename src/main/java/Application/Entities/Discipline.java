@@ -19,7 +19,6 @@ public class Discipline {
     private Long id;
     private String name;
     private BigDecimal cost;
-    private String classroom;
     @OneToMany
     private List<Teacher> teacher;
 }
