@@ -19,5 +19,6 @@ public class Lesson {
     private Discipline discipline;
     private Integer lessonNumber;
     private String homework;
+    private String classroom;
     private LocalDate date;
 }
