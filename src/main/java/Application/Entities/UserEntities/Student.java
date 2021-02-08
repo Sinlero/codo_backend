@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 @Entity(name = "students")
 @AllArgsConstructor
@@ -23,5 +23,5 @@ public class Student extends AbstractUser {
     private String phoneNumber;
     @ManyToMany
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Discipline> disciplines;
+    private List<Discipline> disciplines;
 }

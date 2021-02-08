@@ -3,6 +3,7 @@ package Application.Servicies;
 import Application.Data.Repositories.*;
 import Application.Entities.Discipline;
 import Application.Entities.UserEntities.Student;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,7 +24,7 @@ public class StudentService {
         this.lessonRepository = lessonRepository;
     }
 
-    public Set<Discipline> getDisciplinesByStudentId(Long id) {
+    public List<Discipline> getDisciplinesByStudentId(Long id) {
         Optional<Student> student = studentRepository.findById(id);
         if (!student.isPresent()) {
             return null;
@@ -33,10 +34,10 @@ public class StudentService {
 
     public String addDisciplinesForStudent(Long userId, Set<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
-        if(student == null) {
+        if (student == null) {
             return "Student not found";
         }
-        Set<Discipline> oldDisciplines = student.getDisciplines();
+        List<Discipline> oldDisciplines = student.getDisciplines();
         Iterable<Discipline> disciplineList = disciplineRepository.findAllById(disciplines);
         oldDisciplines.addAll((Collection<Discipline>) disciplineList);
         student.setDisciplines(oldDisciplines);
@@ -46,10 +47,10 @@ public class StudentService {
 
     public String deleteDisciplinesOfStudent(Long userId, Set<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
-        if(student == null) {
+        if (student == null) {
             return "Student not found";
         }
-        Set<Discipline> oldDisciplines = student.getDisciplines();
+        List<Discipline> oldDisciplines = student.getDisciplines();
         Iterable<Discipline> disciplineList = disciplineRepository.findAllById(disciplines);
         oldDisciplines.removeAll((Collection<Discipline>) disciplineList);
         student.setDisciplines(oldDisciplines);
@@ -68,7 +69,7 @@ public class StudentService {
 
     public String deleteStudent(Long id) {
         Optional<Student> student = studentRepository.findById(id);
-        if(!student.isPresent()) {
+        if (!student.isPresent()) {
             return null;
         }
         studentRepository.deleteById(id);
