@@ -26,7 +26,7 @@ public class DisciplineController {
 
     @RequestMapping("/add")
     public ResponseEntity<String> addDiscipline(@RequestParam String name, @RequestParam BigDecimal cost,
-                                        @RequestParam ArrayList<Long> teacherIDs, @RequestParam String colorCode) {
+                                        @RequestParam ArrayList<Long> teacherIDs, @RequestParam(required = false) String colorCode) {
         return disciplineService.addDiscipline(name, cost, teacherIDs, colorCode);
     }
 }
