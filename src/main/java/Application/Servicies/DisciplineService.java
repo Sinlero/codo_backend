@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class DisciplineService {
@@ -29,8 +30,18 @@ public class DisciplineService {
         return (List<Discipline>) disciplineRepository.findAll();
     }
 
+    public String generateColor(){
+        StringBuilder color = new StringBuilder("#");
+        String[] letters = "0123456789abcdef".split("");
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            color.append(letters[random.nextInt(letters.length)]);
+        }
+        return color.toString();
+    }
+
     public ResponseEntity<String> addDiscipline(@RequestParam String name, @RequestParam BigDecimal cost,
-                                        @RequestParam ArrayList<Long> teacherIDs, @RequestParam String colorCode) {
+                                        @RequestParam ArrayList<Long> teacherIDs, @RequestParam(required = false) String colorCode) {
         ArrayList<Teacher> teachers = new ArrayList<>();
         for (Long teacherID : teacherIDs) {
             Optional<Teacher> teacher = teacherRepository.findById(teacherID);
