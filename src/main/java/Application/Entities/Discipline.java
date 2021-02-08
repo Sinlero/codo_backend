@@ -21,4 +21,12 @@ public class Discipline {
     private BigDecimal cost;
     @OneToMany
     private List<Teacher> teacher;
+    private String colorCode;
+
+    public Discipline(String name, BigDecimal cost, List<Teacher> teacherIDs, String colorCode) {
+        this.name = name;
+        this.cost = cost;
+        this.teacher = teacherIDs;
+        this.colorCode = colorCode;
+    }
 }
