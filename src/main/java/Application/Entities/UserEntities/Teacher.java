@@ -12,4 +12,5 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = false)
 public class Teacher extends AbstractUser {
 
+    private String phoneNumber;
 }
