@@ -2,3 +2,5 @@
 target/*
 src/main/resources/*
 Images/*
+/src/resources/Application.properties
+/ru.lit-codo.iml
