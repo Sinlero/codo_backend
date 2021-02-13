@@ -32,9 +32,7 @@ public class EventService {
         Event event;
         File newFile = new File(String.valueOf(FileService.FILES_PATH));
         LocalDate localDate = LocalDate.parse(date);
-        if (file == null) {
-            event = getEventWithDefaultImage(head, previewText, fullText, localDate);
-        } else if (file.isEmpty()) {
+        if (file == null || file.isEmpty()) {
             event = getEventWithDefaultImage(head, previewText, fullText, localDate);
         } else {
             newFile = FileService.saveImage(newFile, file);
@@ -46,7 +44,7 @@ public class EventService {
         return new ResponseEntity<>(event.getId().toString(), HttpStatus.OK);
     }
 
-    public ResponseEntity<String> deleteById(Long id) {
+    public ResponseEntity<String> delete(Long id) {
         Optional<Event> event = eventRepository.findById(id);
         if (!event.isPresent()) {
             return new ResponseEntity<>("Event not found", HttpStatus.NOT_FOUND);

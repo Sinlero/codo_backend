@@ -31,9 +31,7 @@ public class NewsService {
         File newFile = new File(String.valueOf(FileService.FILES_PATH));
         LocalDate date = LocalDate.now();
         News news;
-        if (file == null) {
-            news = getNewsWithDefaultImage(head, previewText, fullText, date);
-        } else if (file.isEmpty()) {
+        if (file == null || file.isEmpty()) {
             news = getNewsWithDefaultImage(head, previewText, fullText, date);
         } else {
             newFile = FileService.saveImage(newFile, file);

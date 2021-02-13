@@ -27,7 +27,7 @@ public class EventController {
 
     @RequestMapping("/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        return eventService.deleteById(id);
+        return eventService.delete(id);
     }
 
     @RequestMapping("/{id}/update")
