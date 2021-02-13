@@ -19,7 +19,7 @@ public class Discipline {
     private Long id;
     private String name;
     private BigDecimal cost;
-    @OneToMany
+    @ManyToMany
     private List<Teacher> teacher;
     private String colorCode;
 
