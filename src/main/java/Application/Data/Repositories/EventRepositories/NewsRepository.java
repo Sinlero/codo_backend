@@ -1,4 +1,4 @@
-package Application.Data.Repositories;
+package Application.Data.Repositories.EventRepositories;
 
 import Application.Entities.EventEntities.News;
 import org.springframework.data.repository.CrudRepository;

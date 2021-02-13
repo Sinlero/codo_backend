@@ -2,7 +2,7 @@ package Application.Servicies.EventServicies;
 
 import Application.Entities.EventEntities.Event;
 import Application.Entities.Image;
-import Application.Data.Repositories.EventRepository;
+import Application.Data.Repositories.EventRepositories.EventRepository;
 import Application.Data.Repositories.ImageRepository;
 import Application.Servicies.FileService;
 import org.springframework.http.HttpStatus;

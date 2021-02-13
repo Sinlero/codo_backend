@@ -3,7 +3,7 @@ package Application.Servicies.EventServicies;
 import Application.Entities.Image;
 import Application.Entities.EventEntities.News;
 import Application.Data.Repositories.ImageRepository;
-import Application.Data.Repositories.NewsRepository;
+import Application.Data.Repositories.EventRepositories.NewsRepository;
 import Application.Servicies.FileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

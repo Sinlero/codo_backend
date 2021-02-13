@@ -1,4 +1,4 @@
-package Application.Controllers;
+package Application.Controllers.UserControllers;
 
 import Application.Entities.UserEntities.Student;
 import Application.Data.DisciplinesUpdate;

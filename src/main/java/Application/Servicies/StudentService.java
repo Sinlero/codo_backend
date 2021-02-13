@@ -1,9 +1,9 @@
 package Application.Servicies;
 
 import Application.Data.Repositories.*;
+import Application.Data.Repositories.UserRepositories.StudentRepository;
 import Application.Entities.Discipline;
 import Application.Entities.UserEntities.Student;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

@@ -1,4 +1,4 @@
-package Application.Data.Repositories;
+package Application.Data.Repositories.UserRepositories;
 
 import Application.Entities.UserEntities.Teacher;
 import org.springframework.data.repository.CrudRepository;

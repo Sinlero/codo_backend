@@ -1,13 +1,12 @@
 package Application.Servicies;
 
-import Application.Data.Repositories.TeacherRepository;
+import Application.Data.Repositories.UserRepositories.TeacherRepository;
 import Application.Entities.Discipline;
 import Application.Data.Repositories.DisciplineRepository;
 import Application.Entities.UserEntities.Teacher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
