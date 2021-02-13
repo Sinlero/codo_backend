@@ -17,8 +17,8 @@ import java.util.Random;
 @Service
 public class DisciplineService {
 
-    DisciplineRepository disciplineRepository;
-    TeacherRepository teacherRepository;
+    private DisciplineRepository disciplineRepository;
+    private TeacherRepository teacherRepository;
 
     public DisciplineService(DisciplineRepository disciplineRepository, TeacherRepository teacherRepository) {
         this.disciplineRepository = disciplineRepository;

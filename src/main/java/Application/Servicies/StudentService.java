@@ -11,10 +11,10 @@ import java.util.*;
 @Service
 public class StudentService {
 
-    StudentRepository studentRepository;
-    DisciplineRepository disciplineRepository;
-    JournalRepository journalRepository;
-    LessonRepository lessonRepository;
+    private StudentRepository studentRepository;
+    private DisciplineRepository disciplineRepository;
+    private JournalRepository journalRepository;
+    private LessonRepository lessonRepository;
 
     public StudentService(StudentRepository studentRepository, DisciplineRepository disciplineRepository,
                           JournalRepository journalRepository, LessonRepository lessonRepository) {
