@@ -70,7 +70,7 @@ public class StudentService {
     public String deleteStudent(Long id) {
         Optional<Student> student = studentRepository.findById(id);
         if (!student.isPresent()) {
-            return null;
+            return "Student with this id not found";
         }
         studentRepository.deleteById(id);
         return "Success";
