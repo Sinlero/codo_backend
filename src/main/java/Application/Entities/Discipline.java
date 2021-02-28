@@ -29,13 +29,6 @@ public class Discipline {
     private List<Student> student ;
     private String colorCode;
 
-    public Discipline(String name, BigDecimal cost, List<Teacher> teacherIDs, String colorCode) {
-        this.name = name;
-        this.cost = cost;
-        this.teacher = teacherIDs;
-        this.colorCode = colorCode;
-    }
-
     public Discipline(String name, BigDecimal cost, String colorCode) {
         this.name = name;
         this.cost = cost;
