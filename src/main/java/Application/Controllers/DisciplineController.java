@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/discipline")
@@ -27,13 +26,19 @@ public class DisciplineController {
 
     @RequestMapping("/add")
     public ResponseEntity<String> addDiscipline(@RequestParam String name, @RequestParam BigDecimal cost,
-                                                @RequestParam(required = false) ArrayList<Long> teacherIDs,
                                                 @RequestParam(required = false) String colorCode) {
-        return disciplineService.addDiscipline(name, cost, teacherIDs, colorCode);
+        return disciplineService.addDiscipline(name, cost, colorCode);
     }
 
     @RequestMapping("/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return disciplineService.delete(id);
+    }
+
+    @RequestMapping("/{id}/update")
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestParam String name,
+                                         @RequestParam BigDecimal cost,
+                                         @RequestParam String colorCode) {
+        return disciplineService.update(id, name, cost, colorCode);
     }
 }
