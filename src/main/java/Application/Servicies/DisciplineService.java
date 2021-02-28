@@ -31,25 +31,11 @@ public class DisciplineService {
     }
 
     @Transactional
-    public ResponseEntity<String> addDiscipline(String name, BigDecimal cost, ArrayList<Long> teacherIDs,
-                                                String colorCode) {
+    public ResponseEntity<String> addDiscipline(String name, BigDecimal cost, String colorCode) {
         if (colorCode == null || colorCode.isEmpty()) {
             colorCode = generateColor();
         }
-        if (teacherIDs == null || teacherIDs.isEmpty()) {
-            Discipline discipline = new Discipline(name, cost, colorCode);
-            disciplineRepository.save(discipline);
-            return new ResponseEntity<>("Discipline added", HttpStatus.OK);
-        }
-        ArrayList<Teacher> teachers = new ArrayList<>();
-        for (Long teacherID : teacherIDs) {
-            Optional<Teacher> teacher = teacherRepository.findById(teacherID);
-            if (!teacher.isPresent()) {
-                return new ResponseEntity<>(String.format("Teacher with id %s not found", teacherID), HttpStatus.NOT_FOUND);
-            }
-            teachers.add(teacher.get());
-        }
-        Discipline discipline = new Discipline(name, cost, teachers, colorCode);
+        Discipline discipline = new Discipline(name, cost, colorCode);
         disciplineRepository.save(discipline);
         return new ResponseEntity<>("Discipline added", HttpStatus.OK);
     }
@@ -64,7 +50,22 @@ public class DisciplineService {
         return new ResponseEntity<>("Discipline deleted", HttpStatus.OK);
     }
 
-    public String generateColor() {
+    @Transactional
+    public ResponseEntity<String> update(Long id, String name, BigDecimal cost, String colorCode) {
+        Optional<Discipline> discipline = disciplineRepository.findById(id);
+        if (!discipline.isPresent()) {
+            return new ResponseEntity<>("Discipline with this id not found", HttpStatus.NOT_FOUND);
+        }
+        Discipline updatedDiscipline = discipline.get();
+        updatedDiscipline.setName(name);
+        updatedDiscipline.setCost(cost);
+        updatedDiscipline.setColorCode(colorCode);
+        disciplineRepository.save(updatedDiscipline);
+        return new ResponseEntity<>("Discipline updated",HttpStatus.OK);
+    }
+
+
+    private String generateColor() {
         StringBuilder color = new StringBuilder("#");
         String[] letters = "0123456789abcdef".split("");
         Random random = new Random();
