@@ -3,6 +3,7 @@ package Application.Controllers.UserControllers;
 import Application.Entities.UserEntities.Teacher;
 import Application.Servicies.TeacherService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +29,10 @@ public class TeacherController {
     public ResponseEntity<String> add(@RequestBody Teacher teacher) {
         System.out.println(teacher.getPhoneNumber());
         return teacherService.add(teacher);
+    }
+
+    @RequestMapping("/{id}/delete")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        return teacherService.delete(id);
     }
 }
