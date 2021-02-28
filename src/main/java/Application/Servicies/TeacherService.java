@@ -27,6 +27,16 @@ public class TeacherService {
         return new ResponseEntity<>("Teacher added", HttpStatus.OK);
     }
 
+    public ResponseEntity<String> update(Long id, Teacher updatedTeacher) {
+        Optional<Teacher> teacher = teacherRepository.findById(id);
+        if (!teacher.isPresent()) {
+            return new ResponseEntity<>("Teacher with this id not found", HttpStatus.NOT_FOUND);
+        }
+        updatedTeacher.setId(id);
+        teacherRepository.save(updatedTeacher);
+        return new ResponseEntity<>("Teacher updated", HttpStatus.OK);
+    }
+
     public ResponseEntity<String> delete(Long id) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if(!teacher.isPresent()) {
