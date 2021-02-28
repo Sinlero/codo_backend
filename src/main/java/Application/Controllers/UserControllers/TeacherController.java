@@ -27,8 +27,12 @@ public class TeacherController {
 
     @RequestMapping("/add")
     public ResponseEntity<String> add(@RequestBody Teacher teacher) {
-        System.out.println(teacher.getPhoneNumber());
         return teacherService.add(teacher);
+    }
+
+    @RequestMapping("/{id}/update")
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Teacher teacher) {
+        return teacherService.update(id, teacher);
     }
 
     @RequestMapping("/{id}/delete")
