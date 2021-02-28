@@ -1,5 +1,6 @@
 package Application.Entities;
 
+import Application.Entities.UserEntities.Student;
 import Application.Entities.UserEntities.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,14 +20,22 @@ public class Discipline {
     private Long id;
     private String name;
     private BigDecimal cost;
-    @ManyToMany
+    @ManyToMany(mappedBy = "disciplines")
     private List<Teacher> teacher;
+    @ManyToMany(mappedBy = "disciplines")
+    private List<Student> student ;
     private String colorCode;
 
     public Discipline(String name, BigDecimal cost, List<Teacher> teacherIDs, String colorCode) {
         this.name = name;
         this.cost = cost;
         this.teacher = teacherIDs;
+        this.colorCode = colorCode;
+    }
+
+    public Discipline(String name, BigDecimal cost, String colorCode) {
+        this.name = name;
+        this.cost = cost;
         this.colorCode = colorCode;
     }
 }
