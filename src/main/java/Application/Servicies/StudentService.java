@@ -4,6 +4,8 @@ import Application.Data.Repositories.*;
 import Application.Data.Repositories.UserRepositories.StudentRepository;
 import Application.Entities.Discipline;
 import Application.Entities.UserEntities.Student;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,15 +15,11 @@ public class StudentService {
 
     private StudentRepository studentRepository;
     private DisciplineRepository disciplineRepository;
-    private JournalRepository journalRepository;
-    private LessonRepository lessonRepository;
 
-    public StudentService(StudentRepository studentRepository, DisciplineRepository disciplineRepository,
-                          JournalRepository journalRepository, LessonRepository lessonRepository) {
+
+    public StudentService(StudentRepository studentRepository, DisciplineRepository disciplineRepository) {
         this.studentRepository = studentRepository;
         this.disciplineRepository = disciplineRepository;
-        this.journalRepository = journalRepository;
-        this.lessonRepository = lessonRepository;
     }
 
     public List<Discipline> getDisciplinesByStudentId(Long id) {
@@ -75,4 +73,16 @@ public class StudentService {
         studentRepository.deleteById(id);
         return "Success";
     }
+
+    public ResponseEntity<String> update(Long id, Student updatedStudent) {
+        Optional<Student> student = studentRepository.findById(id);
+        if (!student.isPresent()) {
+            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
+        }
+        updatedStudent.setId(student.get().getId());
+        updatedStudent.getDisciplines().forEach((val) -> System.out.println(val));
+        studentRepository.save(updatedStudent);
+        return new ResponseEntity<>("Student updated", HttpStatus.OK);
+    }
+
 }
