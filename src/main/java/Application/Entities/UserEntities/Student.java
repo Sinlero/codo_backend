@@ -24,4 +24,5 @@ public class Student extends AbstractUser {
     @ManyToMany
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Discipline> disciplines;
+    private Boolean debtor;
 }
