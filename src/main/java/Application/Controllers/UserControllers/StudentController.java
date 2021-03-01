@@ -44,6 +44,11 @@ public class StudentController {
         return studentService.addStudent(newStudent);
     }
 
+    @RequestMapping("/{id}/update")
+    public ResponseEntity<String> update(@PathVariable Long id,@RequestBody Student student) {
+        return studentService.update(id, student);
+    }
+
     @RequestMapping("/{id}/delete")
     public String deleteStudent(@PathVariable Long id) {
         return studentService.deleteStudent(id);
