@@ -80,7 +80,7 @@ public class StudentService {
             return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
         }
         updatedStudent.setId(student.get().getId());
-        updatedStudent.getDisciplines().forEach((val) -> System.out.println(val));
+        updatedStudent.setPassword(student.get().getPassword());
         studentRepository.save(updatedStudent);
         return new ResponseEntity<>("Student updated", HttpStatus.OK);
     }
