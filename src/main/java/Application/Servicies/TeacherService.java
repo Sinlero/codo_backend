@@ -33,6 +33,7 @@ public class TeacherService {
             return new ResponseEntity<>("Teacher with this id not found", HttpStatus.NOT_FOUND);
         }
         updatedTeacher.setId(id);
+        updatedTeacher.setPassword(teacher.get().getPassword());
         teacherRepository.save(updatedTeacher);
         return new ResponseEntity<>("Teacher updated", HttpStatus.OK);
     }
