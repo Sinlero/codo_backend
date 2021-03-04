@@ -85,4 +85,17 @@ public class StudentService {
         return new ResponseEntity<>("Student updated", HttpStatus.OK);
     }
 
+    public ResponseEntity<String> changePassword(Long id, String password) {
+        Optional<Student> student = studentRepository.findById(id);
+        if (!student.isPresent()) {
+            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
+        }
+        if (password == null || password.trim().isEmpty()) {
+            return new ResponseEntity<>("Password field is empty", HttpStatus.BAD_REQUEST);
+        }
+        student.get().setPassword(password);
+        studentRepository.save(student.get());
+        return new ResponseEntity<>("Password updated", HttpStatus.OK);
+    }
+
 }
