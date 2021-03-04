@@ -3,10 +3,7 @@ package Application.Controllers.UserControllers;
 import Application.Entities.UserEntities.Teacher;
 import Application.Servicies.TeacherService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,5 +35,10 @@ public class TeacherController {
     @RequestMapping("/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return teacherService.delete(id);
+    }
+
+    @RequestMapping("/{id}/changePassword")
+    public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestParam String password) {
+        return teacherService.changePassword(id, password);
     }
 }
