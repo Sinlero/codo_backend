@@ -46,4 +46,17 @@ public class TeacherService {
         teacherRepository.deleteById(id);
         return new ResponseEntity<>("Teacher deleted", HttpStatus.OK);
     }
+
+    public ResponseEntity<String> changePassword(Long id, String password) {
+        Optional<Teacher> teacher = teacherRepository.findById(id);
+        if(!teacher.isPresent()) {
+            return new ResponseEntity<>("Teacher with this id not found", HttpStatus.NOT_FOUND);
+        }
+        if (password == null || password.trim().isEmpty()) {
+            return new ResponseEntity<>("Password is empty", HttpStatus.BAD_REQUEST);
+        }
+        teacher.get().setPassword(password);
+        teacherRepository.save(teacher.get());
+        return new ResponseEntity<>("Password updated", HttpStatus.OK);
+    }
 }
