@@ -22,12 +22,12 @@ public class StudentController {
     }
 
     @RequestMapping("/addDisciplines")
-    public String  addDisciplines(@RequestBody DisciplinesUpdate update) {
+    public ResponseEntity<String> addDisciplines(@RequestBody DisciplinesUpdate update) {
         return studentService.addDisciplinesForStudent(update.getUserId(), update.getDisciplines());
     }
 
     @RequestMapping("/deleteDisciplines")
-    public String deleteDisciplines(@RequestBody DisciplinesUpdate update) {
+    public ResponseEntity<String> deleteDisciplines(@RequestBody DisciplinesUpdate update) {
         return studentService.deleteDisciplinesOfStudent(update.getUserId(), update.getDisciplines());
     }
 
@@ -37,17 +37,17 @@ public class StudentController {
     }
 
     @RequestMapping("/addStudent")
-    public String addStudent(@RequestBody Student newStudent) {
+    public ResponseEntity<String> addStudent(@RequestBody Student newStudent) {
         return studentService.addStudent(newStudent);
     }
 
     @RequestMapping("/{id}/update")
-    public ResponseEntity<String> update(@PathVariable Long id,@RequestBody Student student) {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Student student) {
         return studentService.update(id, student);
     }
 
     @RequestMapping("/{id}/delete")
-    public String deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
         return studentService.deleteStudent(id);
     }
 

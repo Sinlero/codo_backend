@@ -30,48 +30,48 @@ public class StudentService {
         return student.get().getDisciplines();
     }
 
-    public String addDisciplinesForStudent(Long userId, Set<Long> disciplines) {
+    public ResponseEntity<String> addDisciplinesForStudent(Long userId, Set<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
         if (student == null) {
-            return "Student not found";
+            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
         }
         List<Discipline> oldDisciplines = student.getDisciplines();
         Iterable<Discipline> disciplineList = disciplineRepository.findAllById(disciplines);
         oldDisciplines.addAll((Collection<Discipline>) disciplineList);
         student.setDisciplines(oldDisciplines);
         studentRepository.save(student);
-        return "Success";
+        return new ResponseEntity<>("Disciplines added for student", HttpStatus.OK);
     }
 
-    public String deleteDisciplinesOfStudent(Long userId, Set<Long> disciplines) {
+    public ResponseEntity<String> deleteDisciplinesOfStudent(Long userId, Set<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
         if (student == null) {
-            return "Student not found";
+            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
         }
         List<Discipline> oldDisciplines = student.getDisciplines();
         Iterable<Discipline> disciplineList = disciplineRepository.findAllById(disciplines);
         oldDisciplines.removeAll((Collection<Discipline>) disciplineList);
         student.setDisciplines(oldDisciplines);
         studentRepository.save(student);
-        return "Success";
+        return new ResponseEntity<>("Disciplines deleted for student", HttpStatus.OK);
     }
 
     public List<Student> getAllStudents() {
         return (List<Student>) studentRepository.findAll();
     }
 
-    public String addStudent(Student newStudent) {
+    public ResponseEntity<String> addStudent(Student newStudent) {
         studentRepository.save(newStudent);
-        return "Success";
+        return new ResponseEntity<>("Student added", HttpStatus.OK);
     }
 
-    public String deleteStudent(Long id) {
+    public ResponseEntity<String> deleteStudent(Long id) {
         Optional<Student> student = studentRepository.findById(id);
         if (!student.isPresent()) {
-            return "Student with this id not found";
+            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
         }
         studentRepository.deleteById(id);
-        return "Success";
+        return new ResponseEntity<>("Student deleted", HttpStatus.OK);
     }
 
     public ResponseEntity<String> update(Long id, Student updatedStudent) {
