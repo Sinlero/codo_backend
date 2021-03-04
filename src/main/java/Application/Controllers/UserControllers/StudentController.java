@@ -51,4 +51,8 @@ public class StudentController {
         return studentService.deleteStudent(id);
     }
 
+    @RequestMapping("/{id}/changePassword")
+    public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestParam String password) {
+        return studentService.changePassword(id, password);
+    }
 }
