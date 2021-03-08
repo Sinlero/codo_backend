@@ -61,6 +61,9 @@ public class StudentService {
     }
 
     public ResponseEntity<String> addStudent(Student newStudent) {
+        if (studentRepository.findStudentByLogin(newStudent.getLogin()).isPresent()) {
+            return new ResponseEntity<>("Student with this login already have", HttpStatus.CONFLICT);
+        }
         studentRepository.save(newStudent);
         return new ResponseEntity<>("Student added", HttpStatus.OK);
     }

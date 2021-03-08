@@ -23,6 +23,9 @@ public class TeacherService {
     }
 
     public ResponseEntity<String> add(Teacher teacher) {
+        if (teacherRepository.findTeacherByLogin(teacher.getLogin()).isPresent()) {
+            return new ResponseEntity<>("Teacher with this login already have", HttpStatus.CONFLICT);
+        }
         teacherRepository.save(teacher);
         return new ResponseEntity<>("Teacher added", HttpStatus.OK);
     }
