@@ -11,12 +11,13 @@ import javax.persistence.*;
 @Data
 public abstract class AbstractUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String login;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String fio;
-    private boolean sex;
-    private int privilege;
+    private Boolean sex;
+    private Integer privilege;
 }

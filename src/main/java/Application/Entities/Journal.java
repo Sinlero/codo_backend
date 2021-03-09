@@ -19,6 +19,6 @@ public class Journal {
     private Student student;
     @OneToOne
     private Lesson lesson;
-    private boolean presence;
+    private Boolean presence;
     private Integer mark;
 }

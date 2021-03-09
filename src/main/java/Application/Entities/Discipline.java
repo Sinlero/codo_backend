@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Discipline {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private BigDecimal cost;

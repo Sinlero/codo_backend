@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @Data
 public class Image {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonIgnore
     private String path;
