@@ -17,12 +17,12 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Student extends AbstractUser {
-    private BigDecimal balance;
-    private String course;
-    private String parentFio;
-    private String phoneNumber;
+    protected BigDecimal balance;
+    protected String course;
+    protected String parentFio;
+    protected String phoneNumber;
     @ManyToMany
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Discipline> disciplines;
-    private Boolean debtor;
+    protected List<Discipline> disciplines;
+    protected Boolean debtor;
 }
