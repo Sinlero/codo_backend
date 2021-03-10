@@ -18,6 +18,7 @@ public abstract class AbstractEvent {
     protected Long id;
     protected String head;
     protected String previewText;
+    @Column(columnDefinition = "TEXT")
     protected String fullText;
     @OneToOne
     protected Image image;
