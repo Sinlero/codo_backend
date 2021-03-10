@@ -3,9 +3,7 @@ package Application.Controllers;
 import Application.Entities.Lesson;
 import Application.Services.LessonService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/lesson")
@@ -20,6 +18,11 @@ public class LessonController {
     @RequestMapping("/add")
     public ResponseEntity<String> add(@RequestBody Lesson lesson) {
         return lessonService.add(lesson);
+    }
+
+    @RequestMapping("/{id}/addHomework")
+    public ResponseEntity<String> addHomework(@PathVariable Long id, @RequestParam String homework) {
+        return lessonService.addHomework(id, homework);
     }
 
 }
