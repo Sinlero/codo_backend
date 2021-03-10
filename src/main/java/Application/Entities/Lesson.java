@@ -18,6 +18,7 @@ public class Lesson {
     @OneToOne
     private Discipline discipline;
     private Integer lessonNumber;
+    @Column(length = 500)
     private String homework;
     private String classroom;
     private LocalDate date;
