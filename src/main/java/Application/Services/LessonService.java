@@ -29,4 +29,14 @@ public class LessonService {
         lessonRepository.save(lesson);
         return new ResponseEntity<>("Lesson added", HttpStatus.OK);
     }
+
+    public ResponseEntity<String> addHomework(Long id, String homework) {
+        Optional<Lesson> lesson = lessonRepository.findById(id);
+        if (!lesson.isPresent()) {
+            return new ResponseEntity<>("Lesson with this id not found", HttpStatus.NOT_FOUND);
+        }
+        lesson.get().setHomework(homework);
+        lessonRepository.save(lesson.get());
+        return new ResponseEntity<>("Homework added", HttpStatus.OK);
+    }
 }
