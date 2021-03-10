@@ -1,7 +1,7 @@
 package Application.Controllers.EventControllers;
 
 import Application.Entities.EventEntities.News;
-import Application.Servicies.EventServicies.NewsService;
+import Application.Services.EventServices.NewsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,4 +1,4 @@
-package Application.Servicies;
+package Application.Services;
 
 import Application.Entities.Image;
 import Application.Data.Repositories.ImageRepository;

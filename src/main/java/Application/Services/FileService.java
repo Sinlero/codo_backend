@@ -1,4 +1,4 @@
-package Application.Servicies;
+package Application.Services;
 
 import Application.Entities.EventEntities.Event;
 import Application.Entities.Image;

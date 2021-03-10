@@ -2,7 +2,7 @@ package Application.Controllers.UserControllers;
 
 import Application.Entities.UserEntities.Student;
 import Application.Data.DisciplinesUpdate;
-import Application.Servicies.StudentService;
+import Application.Services.UserServices.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

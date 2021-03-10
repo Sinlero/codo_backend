@@ -1,7 +1,7 @@
 package Application.Controllers;
 
 import Application.Entities.Lesson;
-import Application.Servicies.LessonService;
+import Application.Services.LessonService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

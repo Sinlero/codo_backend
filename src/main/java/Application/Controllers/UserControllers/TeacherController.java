@@ -1,7 +1,7 @@
 package Application.Controllers.UserControllers;
 
 import Application.Entities.UserEntities.Teacher;
-import Application.Servicies.TeacherService;
+import Application.Services.UserServices.TeacherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package Application.Servicies;
+package Application.Services.UserServices;
 
 import Application.Data.Repositories.*;
 import Application.Data.Repositories.UserRepositories.StudentRepository;

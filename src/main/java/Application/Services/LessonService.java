@@ -1,4 +1,4 @@
-package Application.Servicies;
+package Application.Services;
 
 import Application.Data.Repositories.DisciplineRepository;
 import Application.Data.Repositories.LessonRepository;

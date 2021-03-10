@@ -1,10 +1,10 @@
-package Application.Servicies.EventServicies;
+package Application.Services.EventServices;
 
 import Application.Entities.Image;
 import Application.Entities.EventEntities.News;
 import Application.Data.Repositories.ImageRepository;
 import Application.Data.Repositories.EventRepositories.NewsRepository;
-import Application.Servicies.FileService;
+import Application.Services.FileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

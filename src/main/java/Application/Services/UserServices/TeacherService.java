@@ -1,4 +1,4 @@
-package Application.Servicies;
+package Application.Services.UserServices;
 
 import Application.Data.Repositories.UserRepositories.TeacherRepository;
 import Application.Entities.UserEntities.Teacher;
