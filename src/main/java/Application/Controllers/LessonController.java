@@ -25,4 +25,9 @@ public class LessonController {
         return lessonService.addHomework(id, homework);
     }
 
+    @RequestMapping("/{id}/delete")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        return lessonService.delete(id);
+    }
+
 }
