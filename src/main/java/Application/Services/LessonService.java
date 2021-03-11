@@ -33,10 +33,23 @@ public class LessonService {
     public ResponseEntity<String> addHomework(Long id, String homework) {
         Optional<Lesson> lesson = lessonRepository.findById(id);
         if (!lesson.isPresent()) {
-            return new ResponseEntity<>("Lesson with this id not found", HttpStatus.NOT_FOUND);
+            return notFoundLesson();
         }
         lesson.get().setHomework(homework);
         lessonRepository.save(lesson.get());
         return new ResponseEntity<>("Homework added", HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> delete(Long id) {
+        Optional<Lesson> lesson = lessonRepository.findById(id);
+        if(!lesson.isPresent()) {
+            return notFoundLesson();
+        }
+        lessonRepository.delete(lesson.get());
+        return new ResponseEntity<>("Lesson deleted", HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> notFoundLesson() {
+        return new ResponseEntity<>("Lesson with this id not found", HttpStatus.NOT_FOUND);
     }
 }
