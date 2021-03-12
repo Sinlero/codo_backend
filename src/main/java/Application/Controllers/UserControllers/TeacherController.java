@@ -1,5 +1,6 @@
 package Application.Controllers.UserControllers;
 
+import Application.Data.DisciplinesUpdate;
 import Application.Entities.UserEntities.Teacher;
 import Application.Services.UserServices.TeacherService;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,10 @@ public class TeacherController {
     @RequestMapping("/{id}/changePassword")
     public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestParam String password) {
         return teacherService.changePassword(id, password);
+    }
+
+    @RequestMapping("/addDisciplines")
+    public ResponseEntity<String> addDisciplines(@RequestBody DisciplinesUpdate disciplinesUpdate) {
+        return teacherService.addDisciplines(disciplinesUpdate.getUserId(), disciplinesUpdate.getDisciplines());
     }
 }
