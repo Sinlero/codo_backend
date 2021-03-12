@@ -79,6 +79,19 @@ public class TeacherService {
         return new ResponseEntity<>("Disciplines added", HttpStatus.OK);
     }
 
+    public ResponseEntity<String> deleteDisciplines(Long id, Set<Long> disciplines) {
+        Optional<Teacher> teacher = teacherRepository.findById(id);
+        if (!teacher.isPresent()) {
+            return teacherNotFound();
+        }
+        List<Discipline> oldDisciplines = teacher.get().getDisciplines();
+        List<Discipline> removableDisciplines = (List<Discipline>) disciplineRepository.findAllById(disciplines);
+        oldDisciplines.removeAll(removableDisciplines);
+        teacher.get().setDisciplines(oldDisciplines);
+        teacherRepository.save(teacher.get());
+        return new ResponseEntity<>("Disciplines deleted", HttpStatus.OK);
+    }
+
     public ResponseEntity<String> teacherNotFound() {
         return new ResponseEntity<>("Teacher with this id not found", HttpStatus.NOT_FOUND);
     }
