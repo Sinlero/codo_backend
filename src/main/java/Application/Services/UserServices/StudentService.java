@@ -36,9 +36,9 @@ public class StudentService {
             return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
         }
         List<Discipline> oldDisciplines = student.getDisciplines();
-        Iterable<Discipline> disciplineList = disciplineRepository.findAllById(disciplines);
-        oldDisciplines.addAll((Collection<Discipline>) disciplineList);
-        student.setDisciplines(oldDisciplines);
+        List<Discipline> newDisciplines = (List<Discipline>) disciplineRepository.findAllById(disciplines);
+        newDisciplines.addAll(oldDisciplines);
+        student.setDisciplines(newDisciplines);
         studentRepository.save(student);
         return new ResponseEntity<>("Disciplines added for student", HttpStatus.OK);
     }
@@ -49,8 +49,8 @@ public class StudentService {
             return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
         }
         List<Discipline> oldDisciplines = student.getDisciplines();
-        Iterable<Discipline> disciplineList = disciplineRepository.findAllById(disciplines);
-        oldDisciplines.removeAll((Collection<Discipline>) disciplineList);
+        List<Discipline> disciplineList = (List<Discipline>) disciplineRepository.findAllById(disciplines);
+        oldDisciplines.removeAll(disciplineList);
         student.setDisciplines(oldDisciplines);
         studentRepository.save(student);
         return new ResponseEntity<>("Disciplines deleted for student", HttpStatus.OK);
