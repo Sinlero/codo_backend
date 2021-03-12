@@ -47,4 +47,9 @@ public class TeacherController {
     public ResponseEntity<String> addDisciplines(@RequestBody DisciplinesUpdate disciplinesUpdate) {
         return teacherService.addDisciplines(disciplinesUpdate.getUserId(), disciplinesUpdate.getDisciplines());
     }
+
+    @RequestMapping("/deleteDisciplines")
+    public ResponseEntity<String> deleteDisciplines(@RequestBody DisciplinesUpdate disciplinesUpdate) {
+        return teacherService.deleteDisciplines(disciplinesUpdate.getUserId(), disciplinesUpdate.getDisciplines());
+    }
 }
