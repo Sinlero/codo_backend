@@ -57,7 +57,7 @@ public class StudentService {
     }
 
     public List<Student> getAllStudents() {
-        return (List<Student>) studentRepository.findAll();
+        return studentRepository.findAllByOrderByIdAsc();
     }
 
     public ResponseEntity<String> addStudent(Student newStudent) {
