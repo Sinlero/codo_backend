@@ -1,5 +1,6 @@
 package Application.Entities.UserEntities;
 
+import Application.Entities.Course;
 import Application.Entities.Discipline;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class Student extends AbstractUser {
     private BigDecimal balance;
-    private String course;
+    @OneToOne
+    private Course course;
     private String parentFio;
     private String phoneNumber;
     @ManyToMany
