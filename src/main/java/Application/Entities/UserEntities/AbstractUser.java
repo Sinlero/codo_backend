@@ -12,12 +12,12 @@ import javax.persistence.*;
 public abstract class AbstractUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
     @Column(unique = true)
-    private String login;
+    protected String login;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-    private String fio;
-    private Boolean sex;
-    private Integer privilege;
+    protected String password;
+    protected String fio;
+    protected Boolean sex;
+    protected Integer privilege;
 }
