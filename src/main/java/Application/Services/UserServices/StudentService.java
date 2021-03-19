@@ -101,4 +101,8 @@ public class StudentService {
         return new ResponseEntity<>("Password updated", HttpStatus.OK);
     }
 
+    public List<Student> getAllByCourse(Long id_course) {
+        return studentRepository.findAllByCourseId(id_course);
+    }
+
 }
