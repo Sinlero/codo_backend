@@ -6,6 +6,8 @@ import Application.Services.UserServices.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -54,5 +56,10 @@ public class StudentController {
     @RequestMapping("/{id}/changePassword")
     public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestParam String password) {
         return studentService.changePassword(id, password);
+    }
+
+    @RequestMapping("/getAllByCourse/{id_course}")
+    public List<Student> getAllByCourse(@PathVariable Long id_course) {
+        return studentService.getAllByCourse(id_course);
     }
 }
