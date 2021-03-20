@@ -1,4 +1,4 @@
-package Application.Security;
+package Application.Configuration.Security;
 
 import Application.Entities.UserEntities.Student;
 import Application.Entities.UserEntities.Teacher;
