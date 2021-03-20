@@ -27,7 +27,7 @@ public class DisciplineController {
     @RequestMapping("/add")
     public ResponseEntity<String> addDiscipline(@RequestParam String name, @RequestParam BigDecimal cost,
                                                 @RequestParam(required = false) String colorCode) {
-        return disciplineService.addDiscipline(name, cost, colorCode);
+        return disciplineService.add(name, cost, colorCode);
     }
 
     @RequestMapping("/{id}/delete")

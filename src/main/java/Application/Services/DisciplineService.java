@@ -3,6 +3,7 @@ package Application.Services;
 import Application.Data.Repositories.UserRepositories.TeacherRepository;
 import Application.Entities.Discipline;
 import Application.Data.Repositories.DisciplineRepository;
+import Application.Utils.Color.ColorCodeGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,17 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class DisciplineService {
 
     private DisciplineRepository disciplineRepository;
-    private TeacherRepository teacherRepository;
+    private ColorCodeGenerator colorCodeGenerator;
 
-    public DisciplineService(DisciplineRepository disciplineRepository, TeacherRepository teacherRepository) {
+    public DisciplineService(DisciplineRepository disciplineRepository, ColorCodeGenerator colorCodeGenerator){
         this.disciplineRepository = disciplineRepository;
-        this.teacherRepository = teacherRepository;
+        this.colorCodeGenerator = colorCodeGenerator;
     }
 
     public List<Discipline> getAll() {
@@ -29,9 +29,9 @@ public class DisciplineService {
     }
 
     @Transactional
-    public ResponseEntity<String> addDiscipline(String name, BigDecimal cost, String colorCode) {
+    public ResponseEntity<String> add(String name, BigDecimal cost, String colorCode) {
         if (colorCode == null || colorCode.isEmpty()) {
-            colorCode = generateColor();
+            colorCode = colorCodeGenerator.getColor();
         }
         Discipline discipline = new Discipline(name, cost, colorCode);
         disciplineRepository.save(discipline);
@@ -62,14 +62,4 @@ public class DisciplineService {
         return new ResponseEntity<>("Discipline updated",HttpStatus.OK);
     }
 
-
-    private String generateColor() {
-        StringBuilder color = new StringBuilder("#");
-        String[] letters = "0123456789abcdef".split("");
-        Random random = new Random();
-        for (int i = 0; i < 6; i++) {
-            color.append(letters[random.nextInt(letters.length)]);
-        }
-        return color.toString();
-    }
 }
