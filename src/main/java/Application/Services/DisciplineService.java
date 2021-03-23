@@ -28,9 +28,8 @@ public class DisciplineService {
         return (List<Discipline>) disciplineRepository.findAll();
     }
 
-    @Transactional
     public ResponseEntity<String> add(String name, BigDecimal cost, String colorCode) {
-        if (colorCode == null || colorCode.isEmpty()) {
+        if (colorCode == null || colorCode.isEmpty() || colorCode.equals("null")) {
             colorCode = colorCodeGenerator.getColor();
         }
         Discipline discipline = new Discipline(name, cost, colorCode);
@@ -38,7 +37,6 @@ public class DisciplineService {
         return new ResponseEntity<>("Discipline added", HttpStatus.OK);
     }
 
-    @Transactional
     public ResponseEntity<String> delete(Long id) {
         Optional<Discipline> discipline = disciplineRepository.findById(id);
         if (!discipline.isPresent()) {
@@ -48,7 +46,6 @@ public class DisciplineService {
         return new ResponseEntity<>("Discipline deleted", HttpStatus.OK);
     }
 
-    @Transactional
     public ResponseEntity<String> update(Long id, String name, BigDecimal cost, String colorCode) {
         Optional<Discipline> discipline = disciplineRepository.findById(id);
         if (!discipline.isPresent()) {
