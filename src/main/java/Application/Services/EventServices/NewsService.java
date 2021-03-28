@@ -46,7 +46,7 @@ public class NewsService {
     public ResponseEntity<String> delete(Long id) {
         Optional<News> news = newsRepository.findById(id);
         if (!news.isPresent()) {
-            return new ResponseEntity<>("News not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("News with this id not found", HttpStatus.NOT_FOUND);
         }
         newsRepository.deleteById(id);
         Optional<Image> imageEntity = imageRepository.findById(news.get().getImage().getId());

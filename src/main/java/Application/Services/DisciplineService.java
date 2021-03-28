@@ -1,6 +1,5 @@
 package Application.Services;
 
-import Application.Data.Repositories.UserRepositories.TeacherRepository;
 import Application.Entities.Discipline;
 import Application.Data.Repositories.DisciplineRepository;
 import Application.Utils.Color.ColorCodeGenerator;

@@ -54,7 +54,7 @@ public class EventService {
         if (imageEntity.get().getId() != 1) {
             fileService.delete(imageEntity.get());
         }
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        return new ResponseEntity<>("Event deleted", HttpStatus.OK);
     }
 
     public ResponseEntity<String> update(Long id, String head, String previewText, String fullText) {
