@@ -3,10 +3,12 @@ package Application.Controllers;
 import Application.Entities.Lesson;
 import Application.Services.LessonService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/lesson")
+@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')")
 public class LessonController {
 
     private LessonService lessonService;

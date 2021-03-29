@@ -3,12 +3,14 @@ package Application.Controllers.EventControllers;
 import Application.Entities.EventEntities.News;
 import Application.Services.EventServices.NewsService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/news")
 public class NewsController {
 
@@ -36,17 +38,17 @@ public class NewsController {
         return newsService.update(id, head, previewText, fullText);
     }
 
-    @RequestMapping("/getAll")
+    @RequestMapping("/public/getAll")
     public ResponseEntity getAll() {
         return newsService.getAll();
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping("/public/{id}")
     public ResponseEntity<Optional<News>> getById(@PathVariable Long id) {
         return newsService.getById(id);
     }
 
-    @RequestMapping("/{id}/fullText")
+    @RequestMapping("/public/{id}/fullText")
     public String getFullText(@PathVariable Long id) {
         return newsService.getFullText(id);
     }

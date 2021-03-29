@@ -2,6 +2,7 @@ package Application.Controllers.EventControllers;
 
 import Application.Services.EventServices.EventService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/event")
 public class EventController {
 
@@ -37,22 +39,22 @@ public class EventController {
         return eventService.update(id, head, previewText, fullText);
     }
 
-    @RequestMapping("/getAll")
+    @RequestMapping("/public/getAll")
     public ResponseEntity getAll() {
         return eventService.getAll();
     }
 
-    @RequestMapping("/getActual")
+    @RequestMapping("/public/getActual")
     public ResponseEntity getActual() {
         return eventService.getActual();
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping("/public/{id}")
     public ResponseEntity getById(@PathVariable Long id) {
         return eventService.getById(id);
     }
 
-    @RequestMapping("/{id}/fullText")
+    @RequestMapping("/public/{id}/fullText")
     public String getFullText(@PathVariable Long id){
         return eventService.getFullTextById(id);
     }

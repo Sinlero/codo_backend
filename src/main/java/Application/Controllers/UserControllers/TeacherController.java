@@ -4,11 +4,13 @@ import Application.Data.DisciplinesUpdate;
 import Application.Entities.UserEntities.Teacher;
 import Application.Services.UserServices.TeacherService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/teacher")
 public class TeacherController {
 
