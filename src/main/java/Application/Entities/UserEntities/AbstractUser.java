@@ -19,5 +19,6 @@ public abstract class AbstractUser {
     protected String password;
     protected String fio;
     protected Boolean sex;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     protected Integer privilege;
 }
