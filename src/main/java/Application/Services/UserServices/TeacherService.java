@@ -29,6 +29,7 @@ public class TeacherService {
         if (teacherRepository.findTeacherByLogin(teacher.getLogin()).isPresent()) {
             return new ResponseEntity<>("Teacher with this login already have", HttpStatus.CONFLICT);
         }
+        teacher.setPrivilege(2);
         teacherRepository.save(teacher);
         return new ResponseEntity<>("Teacher added", HttpStatus.OK);
     }
