@@ -1,6 +1,7 @@
 package Application.Entities.UserEntities;
 
 import Application.Entities.Discipline;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,9 @@ import javax.persistence.ManyToMany;
 import java.util.List;
 
 @Entity(name = "teachers")
-@Data
+@AllArgsConstructor
 @NoArgsConstructor
+@Data
 @EqualsAndHashCode(callSuper = false)
 public class Teacher extends AbstractUser {
 
