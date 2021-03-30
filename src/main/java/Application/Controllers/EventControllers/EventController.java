@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/event")
 public class EventController {
 
@@ -20,6 +19,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/upload")
     public ResponseEntity<String> upload(@RequestParam(required = false) MultipartFile file, @RequestParam String head,
                                          @RequestParam String previewText, @RequestParam String fullText,
@@ -27,11 +27,13 @@ public class EventController {
         return eventService.upload(file, head, previewText, fullText, date);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return eventService.delete(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/update")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestParam String head,
                                          @RequestParam String previewText,
@@ -39,11 +41,13 @@ public class EventController {
         return eventService.update(id, head, previewText, fullText);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/public/getAll")
     public ResponseEntity getAll() {
         return eventService.getAll();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/public/getActual")
     public ResponseEntity getActual() {
         return eventService.getActual();

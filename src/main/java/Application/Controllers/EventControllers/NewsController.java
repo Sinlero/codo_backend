@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
 
 @RestController
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/news")
 public class NewsController {
 
@@ -20,17 +19,20 @@ public class NewsController {
         this.newsService = newsService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/upload")
     public ResponseEntity<String> upload(@RequestParam(required = false) MultipartFile file, @RequestParam String head,
                                          @RequestParam String previewText, @RequestParam String fullText) {
         return newsService.upload(file, head, previewText, fullText);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return newsService.delete(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/update")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestParam String head,
                                          @RequestParam String previewText,
