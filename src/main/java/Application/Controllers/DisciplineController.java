@@ -11,32 +11,35 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 
 @RestController
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/discipline")
 public class DisciplineController {
 
-    DisciplineService disciplineService;
+    private DisciplineService disciplineService;
 
     public DisciplineController(DisciplineService disciplineService) {
         this.disciplineService = disciplineService;
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_TEACHER', 'ROLE_ADMIN')")
     @RequestMapping("/getAll")
     public ResponseEntity getAll() {
         return ResponseEntity.ok(disciplineService.getAll());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/add")
     public ResponseEntity<String> addDiscipline(@RequestParam String name, @RequestParam BigDecimal cost,
                                                 @RequestParam(required = false) String colorCode) {
         return disciplineService.add(name, cost, colorCode);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         return disciplineService.delete(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/update")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestParam String name,
                                          @RequestParam BigDecimal cost,
