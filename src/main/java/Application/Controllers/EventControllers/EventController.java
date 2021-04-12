@@ -41,13 +41,11 @@ public class EventController {
         return eventService.update(id, head, previewText, fullText);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/public/getAll")
     public ResponseEntity getAll() {
         return eventService.getAll();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/public/getActual")
     public ResponseEntity getActual() {
         return eventService.getActual();
