@@ -1,11 +1,11 @@
 package Application.Configuration.Security;
 
 import Application.Data.Repositories.UserRepositories.AdministratorRepository;
+import Application.Data.Repositories.UserRepositories.StudentRepository;
+import Application.Data.Repositories.UserRepositories.TeacherRepository;
 import Application.Entities.UserEntities.Administrator;
 import Application.Entities.UserEntities.Student;
 import Application.Entities.UserEntities.Teacher;
-import Application.Data.Repositories.UserRepositories.StudentRepository;
-import Application.Data.Repositories.UserRepositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;
@@ -61,34 +61,34 @@ public class Configuration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userName -> {
-                    if (studentRepository.findStudentByLogin(userName).isPresent()) {
-                        Student student = studentRepository.findStudentByLogin(userName).get();
-                        return new User(student.getLogin(), "{noop}" + student.getPassword(),
-                                true,
-                                true,
-                                true,
-                                true,
-                                AuthorityUtils.createAuthorityList("ROLE_USER"));
+            if (studentRepository.findStudentByLogin(userName).isPresent()) {
+                Student student = studentRepository.findStudentByLogin(userName).get();
+                return new User(student.getLogin(), "{noop}" + student.getPassword(),
+                        true,
+                        true,
+                        true,
+                        true,
+                        AuthorityUtils.createAuthorityList("ROLE_USER"));
 
-                    } else if (teacherRepository.findTeacherByLogin(userName).isPresent()) {
-                        Teacher teacher = teacherRepository.findTeacherByLogin(userName).get();
-                        return new User(teacher.getLogin(), "{noop}" + teacher.getPassword(),
-                                true,
-                                true,
-                                true,
-                                true,
-                                AuthorityUtils.createAuthorityList("ROLE_TEACHER"));
+            } else if (teacherRepository.findTeacherByLogin(userName).isPresent()) {
+                Teacher teacher = teacherRepository.findTeacherByLogin(userName).get();
+                return new User(teacher.getLogin(), "{noop}" + teacher.getPassword(),
+                        true,
+                        true,
+                        true,
+                        true,
+                        AuthorityUtils.createAuthorityList("ROLE_TEACHER"));
 
-                    } else if (administratorRepository.findAdministratorByLogin(userName).isPresent()) {
-                        Administrator administrator = administratorRepository.findAdministratorByLogin(userName).get();
-                        return new User(administrator.getLogin(), "{noop}" + administrator.getPassword(),
-                                true,
-                                true,
-                                true,
-                                true,
-                                AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
-                    }
-                    return null;
-                });
+            } else if (administratorRepository.findAdministratorByLogin(userName).isPresent()) {
+                Administrator administrator = administratorRepository.findAdministratorByLogin(userName).get();
+                return new User(administrator.getLogin(), "{noop}" + administrator.getPassword(),
+                        true,
+                        true,
+                        true,
+                        true,
+                        AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
+            }
+            return null;
+        });
     }
 }
