@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/lesson")
 @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')")
@@ -32,4 +34,8 @@ public class LessonController {
         return lessonService.delete(id);
     }
 
+    @RequestMapping("/getAll")
+    public List<Lesson> getAll() {
+        return lessonService.getAll();
+    }
 }
