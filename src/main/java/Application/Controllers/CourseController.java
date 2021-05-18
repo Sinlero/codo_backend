@@ -24,8 +24,8 @@ public class CourseController {
         return courseService.add(name);
     }
 
-    @RequestMapping("/delete")
-    public ResponseEntity<String> delete(@RequestParam Long id) {
+    @RequestMapping("{id}/delete")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         return courseService.delete(id);
     }
 
