@@ -48,4 +48,9 @@ public class LessonController {
     public ResponseEntity getByCourse(@RequestParam Long courseId) {
         return lessonService.getByCourse(courseId);
     }
+
+    @RequestMapping("/getByDateAndCourse")
+    public ResponseEntity getByDateAndCourse(@RequestParam String date, @RequestParam Long courseId) {
+        return lessonService.getByDayAndCourse(date, courseId);
+    }
 }
