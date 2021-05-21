@@ -63,16 +63,16 @@ public class LessonService {
         return new ResponseEntity<>("Lesson with this id not found", HttpStatus.NOT_FOUND);
     }
 
-    public List<Lesson> getLessonsByDay(String date) {
+    public ResponseEntity getLessonsByDay(String date) {
         String[] dateArray = date.split("-");
         LocalDate lessonDate = LocalDate.of(Integer.valueOf(dateArray[0]),
                 Integer.valueOf(dateArray[1]),
                 Integer.valueOf(dateArray[2]));
         Optional<List<Lesson>> lessons = lessonRepository.findAllByDate(lessonDate);
         if (!lessons.isPresent()) {
-            return null;
+            return new ResponseEntity("Lessons on this day not found", HttpStatus.NOT_FOUND);
         }
-        return lessons.get();
+        return ResponseEntity.ok(lessons.get());
     }
 
     public ResponseEntity getLessonsByCourse(Long courseId) {
