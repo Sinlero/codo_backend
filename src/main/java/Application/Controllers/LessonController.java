@@ -38,4 +38,14 @@ public class LessonController {
     public List<Lesson> getAll() {
         return lessonService.getAll();
     }
+
+    @RequestMapping("/getByDay")
+    public List<Lesson> getLessonsByDay(@RequestParam String date) {
+        return lessonService.getLessonsByDay(date);
+    }
+
+    @RequestMapping("/getByCourse")
+    public ResponseEntity getLessonsByCourse(@RequestParam Long courseId) {
+        return lessonService.getLessonsByCourse(courseId);
+    }
 }
