@@ -15,4 +15,6 @@ public interface LessonRepository extends CrudRepository<Lesson, Long> {
     Optional<List<Lesson>> findAllByDate(LocalDate date);
 
     Optional<List<Lesson>> findAllByCourse(Course courseId);
+
+    Optional<List<Lesson>> findAllByDateAndCourse(LocalDate date, Course course);
 }
