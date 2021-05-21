@@ -20,6 +20,8 @@ public class Lesson {
     private Discipline discipline;
     @OneToOne
     private Teacher teacher;
+    @OneToOne
+    private Course course;
     private Integer lessonNumber;
     @Column(length = 500)
     private String homework;
