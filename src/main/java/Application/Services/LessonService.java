@@ -86,4 +86,20 @@ public class LessonService {
         }
         return ResponseEntity.ok(lessons.get());
     }
+
+    public ResponseEntity getByDayAndCourse(String date, Long courseId) {
+        String[] dateArray = date.split("-");
+        LocalDate lessonDate = LocalDate.of(Integer.valueOf(dateArray[0]),
+                                            Integer.valueOf(dateArray[1]),
+                                            Integer.valueOf(dateArray[2]));
+        Optional<Course> course = courseRepository.findById(courseId);
+        if (!course.isPresent()) {
+            return new ResponseEntity("Course not found", HttpStatus.NOT_FOUND);
+        }
+        Optional<List<Lesson>> lessons = lessonRepository.findAllByDateAndCourse(lessonDate, course.get());
+        if (!lessons.isPresent()) {
+            return new ResponseEntity("No lessons found for this course on this day", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(lessons.get());
+    }
 }
