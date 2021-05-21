@@ -40,12 +40,12 @@ public class LessonController {
     }
 
     @RequestMapping("/getByDay")
-    public ResponseEntity getLessonsByDay(@RequestParam String date) {
-        return lessonService.getLessonsByDay(date);
+    public ResponseEntity getByDay(@RequestParam String date) {
+        return lessonService.getByDay(date);
     }
 
     @RequestMapping("/getByCourse")
-    public ResponseEntity getLessonsByCourse(@RequestParam Long courseId) {
-        return lessonService.getLessonsByCourse(courseId);
+    public ResponseEntity getByCourse(@RequestParam Long courseId) {
+        return lessonService.getByCourse(courseId);
     }
 }

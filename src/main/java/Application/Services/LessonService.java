@@ -63,11 +63,11 @@ public class LessonService {
         return new ResponseEntity<>("Lesson with this id not found", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity getLessonsByDay(String date) {
+    public ResponseEntity getByDay(String date) {
         String[] dateArray = date.split("-");
         LocalDate lessonDate = LocalDate.of(Integer.valueOf(dateArray[0]),
-                Integer.valueOf(dateArray[1]),
-                Integer.valueOf(dateArray[2]));
+                                            Integer.valueOf(dateArray[1]),
+                                            Integer.valueOf(dateArray[2]));
         Optional<List<Lesson>> lessons = lessonRepository.findAllByDate(lessonDate);
         if (!lessons.isPresent()) {
             return new ResponseEntity("Lessons on this day not found", HttpStatus.NOT_FOUND);
@@ -75,7 +75,7 @@ public class LessonService {
         return ResponseEntity.ok(lessons.get());
     }
 
-    public ResponseEntity getLessonsByCourse(Long courseId) {
+    public ResponseEntity getByCourse(Long courseId) {
         Optional<Course> course = courseRepository.findById(courseId);
         if (!course.isPresent()) {
             return new ResponseEntity("Course not found", HttpStatus.NOT_FOUND);
