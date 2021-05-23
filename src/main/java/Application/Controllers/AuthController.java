@@ -5,7 +5,6 @@ import Application.Data.Repositories.UserRepositories.StudentRepository;
 import Application.Data.Repositories.UserRepositories.TeacherRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,16 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    @Autowired
     private AdministratorRepository administratorRepository;
-
-    @Autowired
     private StudentRepository studentRepository;
-
-    @Autowired
     private TeacherRepository teacherRepository;
-
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public AuthController(AdministratorRepository administratorRepository, TeacherRepository teacherRepository,
+                          StudentRepository studentRepository) {
+        this.administratorRepository = administratorRepository;
+        this.teacherRepository = teacherRepository;
+        this.studentRepository = studentRepository;
+    }
 
     @RequestMapping("/login")
     public ResponseEntity auth() {
