@@ -54,4 +54,20 @@ public class JournalService {
         }
         return new ResponseEntity<>("Journal added", HttpStatus.OK);
     }
+
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok(journalRepository.findAll());
+    }
+
+    public ResponseEntity getByLesson(Long lessonId) {
+        Optional<Lesson> lessonOptional = lessonRepository.findById(lessonId);
+        if (!lessonOptional.isPresent()) {
+            return ResponseUtil.notFoundId("Lesson");
+        }
+        Optional<List<Journal>> journals = journalRepository.findAllByLesson(lessonOptional.get());
+        if (!journals.isPresent()) {
+            return new ResponseEntity("Journal with this lesson not found", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(journals.get());
+    }
 }
