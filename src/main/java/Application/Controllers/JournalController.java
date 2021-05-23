@@ -1,19 +1,17 @@
 package Application.Controllers;
 
 import Application.Data.DTO.Journal.JournalUpdate;
-import Application.Data.DTO.Journal.StudentInfo;
 import Application.Services.JournalService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequestMapping("/journal")
+@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')")
 public class JournalController {
 
     private JournalService journalService;
