@@ -46,11 +46,13 @@ public class JournalService {
             }
             journal.add(new Journal(studentOptional.get(), lessonOptional.get(), studentInfo.getPresence(), studentInfo.getMark()));
         }
-        for (Journal saveJournal : journal) {
-            BigDecimal balance = saveJournal.getStudent().getBalance();
-            BigDecimal cost = lessonOptional.get().getDiscipline().getCost();
-            saveJournal.getStudent().setBalance(balance.subtract(cost));
-            journalRepository.save(saveJournal);
+        for (Journal studentInfo : journal) {
+            if(studentInfo.getPresence()) {
+                BigDecimal balance = studentInfo.getStudent().getBalance();
+                BigDecimal cost = lessonOptional.get().getDiscipline().getCost();
+                studentInfo.getStudent().setBalance(balance.subtract(cost));
+            }
+            journalRepository.save(studentInfo);
         }
         return new ResponseEntity<>("Journal added", HttpStatus.OK);
     }
