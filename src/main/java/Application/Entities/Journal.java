@@ -21,4 +21,11 @@ public class Journal {
     private Lesson lesson;
     private Boolean presence;
     private Integer mark;
+
+    public Journal(Student student, Lesson lesson, Boolean presence, Integer mark) {
+        this.student = student;
+        this.lesson = lesson;
+        this.presence = presence;
+        this.mark = mark;
+    }
 }
