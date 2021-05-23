@@ -12,7 +12,9 @@ import Application.Utils.Response.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,20 +32,24 @@ public class JournalService {
         this.journalRepository = journalRepository;
     }
 
+    @Transactional
     public ResponseEntity<String> add(JournalUpdate journalUpdate) {
-        Optional<Lesson> lesson = lessonRepository.findById(journalUpdate.getLessonId());
-        if (!lesson.isPresent()) {
+        Optional<Lesson> lessonOptional = lessonRepository.findById(journalUpdate.getLessonId());
+        if (!lessonOptional.isPresent()) {
             return ResponseUtil.notFoundId("Lesson");
         }
         List<Journal> journal = new ArrayList<>();
         for (StudentInfo studentInfo : journalUpdate.getJournalList()) {
-            Optional<Student> student = studentRepository.findById(studentInfo.getStudentId());
-            if (!student.isPresent()) {
+            Optional<Student> studentOptional = studentRepository.findById(studentInfo.getStudentId());
+            if (!studentOptional.isPresent()) {
                 return ResponseUtil.notFoundId("Student");
             }
-            journal.add(new Journal(student.get(), lesson.get(), studentInfo.getPresence(), studentInfo.getMark()));
+            journal.add(new Journal(studentOptional.get(), lessonOptional.get(), studentInfo.getPresence(), studentInfo.getMark()));
         }
         for (Journal saveJournal : journal) {
+            BigDecimal balance = saveJournal.getStudent().getBalance();
+            BigDecimal cost = lessonOptional.get().getDiscipline().getCost();
+            saveJournal.getStudent().setBalance(balance.subtract(cost));
             journalRepository.save(saveJournal);
         }
         return new ResponseEntity<>("Journal added", HttpStatus.OK);
