@@ -1,7 +1,7 @@
 package Application.Controllers.UserControllers;
 
 import Application.Entities.UserEntities.Student;
-import Application.Data.DisciplinesUpdate;
+import Application.Data.DTO.DisciplinesUpdate;
 import Application.Services.UserServices.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

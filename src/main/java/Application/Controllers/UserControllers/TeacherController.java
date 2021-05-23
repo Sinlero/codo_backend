@@ -1,6 +1,6 @@
 package Application.Controllers.UserControllers;
 
-import Application.Data.DisciplinesUpdate;
+import Application.Data.DTO.DisciplinesUpdate;
 import Application.Entities.UserEntities.Teacher;
 import Application.Services.UserServices.TeacherService;
 import org.springframework.http.ResponseEntity;
