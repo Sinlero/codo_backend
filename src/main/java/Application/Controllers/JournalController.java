@@ -6,6 +6,7 @@ import Application.Services.JournalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -24,5 +25,15 @@ public class JournalController {
     @RequestMapping("/add")
     public ResponseEntity<String> add(@RequestBody JournalUpdate journalUpdate) {
         return journalService.add(journalUpdate);
+    }
+
+    @RequestMapping("/getAll")
+    public ResponseEntity getAll() {
+        return journalService.getAll();
+    }
+
+    @RequestMapping("/getByLesson")
+    public ResponseEntity getByLesson(@RequestParam Long lessonId) {
+        return journalService.getByLesson(lessonId);
     }
 }
