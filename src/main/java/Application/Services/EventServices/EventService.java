@@ -1,10 +1,11 @@
 package Application.Services.EventServices;
 
-import Application.Entities.EventEntities.Event;
-import Application.Entities.Image;
 import Application.Data.Repositories.EventRepositories.EventRepository;
 import Application.Data.Repositories.ImageRepository;
+import Application.Entities.EventEntities.Event;
+import Application.Entities.Image;
 import Application.Services.FileService;
+import Application.Utils.Response.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class EventService {
     public ResponseEntity<String> delete(Long id) {
         Optional<Event> event = eventRepository.findById(id);
         if (!event.isPresent()) {
-            return new ResponseEntity<>("Event not found", HttpStatus.NOT_FOUND);
+            return ResponseUtil.notFoundId("Event");
         }
         eventRepository.deleteById(id);
         Optional<Image> imageEntity = imageRepository.findById(event.get().getImage().getId());
@@ -60,7 +61,7 @@ public class EventService {
     public ResponseEntity<String> update(Long id, String head, String previewText, String fullText) {
         Optional<Event> event = eventRepository.findById(id);
         if (!event.isPresent()) {
-            return new ResponseEntity<>("Event with this id not found", HttpStatus.NOT_FOUND);
+            return ResponseUtil.notFoundId("Event");
         }
         event.get().setHead(head);
         event.get().setPreviewText(previewText);

@@ -2,6 +2,7 @@ package Application.Services;
 
 import Application.Data.Repositories.CourseRepository;
 import Application.Entities.Course;
+import Application.Utils.Response.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class CourseService {
     public ResponseEntity<String> delete(Long id) {
         Optional<Course> course = courseRepository.findById(id);
         if (!course.isPresent()) {
-            return courseNotFound();
+            return ResponseUtil.notFoundId("Course");
         }
         courseRepository.delete(course.get());
         return new ResponseEntity<>("Course deleted", HttpStatus.OK);
@@ -35,7 +36,7 @@ public class CourseService {
     public ResponseEntity<String> update(Long id, String name) {
         Optional<Course> course = courseRepository.findById(id);
         if (!course.isPresent()) {
-            return courseNotFound();
+            return ResponseUtil.notFoundId("Course");
         }
         course.get().setName(name);
         courseRepository.save(course.get());
@@ -46,7 +47,4 @@ public class CourseService {
         return courseRepository.findAllByOrderByIdAsc();
     }
 
-    public ResponseEntity<String> courseNotFound() {
-        return new ResponseEntity<>("Course with this id not found", HttpStatus.NOT_FOUND);
-    }
 }

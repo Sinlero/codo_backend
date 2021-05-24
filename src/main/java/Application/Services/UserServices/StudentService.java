@@ -1,14 +1,17 @@
 package Application.Services.UserServices;
 
-import Application.Data.Repositories.*;
+import Application.Data.Repositories.DisciplineRepository;
 import Application.Data.Repositories.UserRepositories.StudentRepository;
 import Application.Entities.Discipline;
 import Application.Entities.UserEntities.Student;
+import Application.Utils.Response.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class StudentService {
@@ -33,7 +36,7 @@ public class StudentService {
     public ResponseEntity<String> addDisciplinesForStudent(Long userId, Set<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
         if (student == null) {
-            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
+            return ResponseUtil.notFoundId("Student");
         }
         List<Discipline> oldDisciplines = student.getDisciplines();
         List<Discipline> newDisciplines = (List<Discipline>) disciplineRepository.findAllById(disciplines);
@@ -46,7 +49,7 @@ public class StudentService {
     public ResponseEntity<String> deleteDisciplinesOfStudent(Long userId, Set<Long> disciplines) {
         Student student = studentRepository.findById(userId).orElse(null);
         if (student == null) {
-            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
+            return ResponseUtil.notFoundId("Student");
         }
         List<Discipline> oldDisciplines = student.getDisciplines();
         List<Discipline> disciplineList = (List<Discipline>) disciplineRepository.findAllById(disciplines);
@@ -72,7 +75,7 @@ public class StudentService {
     public ResponseEntity<String> deleteStudent(Long id) {
         Optional<Student> student = studentRepository.findById(id);
         if (!student.isPresent()) {
-            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
+            return ResponseUtil.notFoundId("Student");
         }
         studentRepository.deleteById(id);
         return new ResponseEntity<>("Student deleted", HttpStatus.OK);
@@ -81,7 +84,7 @@ public class StudentService {
     public ResponseEntity<String> update(Long id, Student updatedStudent) {
         Optional<Student> student = studentRepository.findById(id);
         if (!student.isPresent()) {
-            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
+            return ResponseUtil.notFoundId("Student");
         }
         updatedStudent.setId(student.get().getId());
         updatedStudent.setPassword(student.get().getPassword());
@@ -92,7 +95,7 @@ public class StudentService {
     public ResponseEntity<String> changePassword(Long id, String password) {
         Optional<Student> student = studentRepository.findById(id);
         if (!student.isPresent()) {
-            return new ResponseEntity<>("Student with this id not found", HttpStatus.NOT_FOUND);
+            return ResponseUtil.notFoundId("Student");
         }
         if (password == null || password.trim().isEmpty()) {
             return new ResponseEntity<>("Password field is empty", HttpStatus.BAD_REQUEST);

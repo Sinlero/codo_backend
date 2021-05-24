@@ -1,16 +1,17 @@
 package Application.Services.EventServices;
 
-import Application.Entities.Image;
-import Application.Entities.EventEntities.News;
-import Application.Data.Repositories.ImageRepository;
 import Application.Data.Repositories.EventRepositories.NewsRepository;
+import Application.Data.Repositories.ImageRepository;
+import Application.Entities.EventEntities.News;
+import Application.Entities.Image;
 import Application.Services.FileService;
+import Application.Utils.Response.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -46,7 +47,7 @@ public class NewsService {
     public ResponseEntity<String> delete(Long id) {
         Optional<News> news = newsRepository.findById(id);
         if (!news.isPresent()) {
-            return new ResponseEntity<>("News with this id not found", HttpStatus.NOT_FOUND);
+            return ResponseUtil.notFoundId("News");
         }
         newsRepository.deleteById(id);
         Optional<Image> imageEntity = imageRepository.findById(news.get().getImage().getId());
@@ -59,7 +60,7 @@ public class NewsService {
     public ResponseEntity<String> update(Long id, String head, String previewText, String fullText) {
         Optional<News> news = newsRepository.findById(id);
         if (!news.isPresent()) {
-            return new ResponseEntity<>("News with this id not found", HttpStatus.NOT_FOUND);
+            return ResponseUtil.notFoundId("News");
         }
         news.get().setHead(head);
         news.get().setPreviewText(previewText);

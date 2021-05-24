@@ -4,11 +4,14 @@ import Application.Data.Repositories.DisciplineRepository;
 import Application.Data.Repositories.UserRepositories.TeacherRepository;
 import Application.Entities.Discipline;
 import Application.Entities.UserEntities.Teacher;
+import Application.Utils.Response.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TeacherService {
@@ -37,7 +40,7 @@ public class TeacherService {
     public ResponseEntity<String> update(Long id, Teacher updatedTeacher) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if (!teacher.isPresent()) {
-            return teacherNotFound();
+            return ResponseUtil.notFoundId("Teacher");
         }
         updatedTeacher.setId(id);
         updatedTeacher.setPassword(teacher.get().getPassword());
@@ -48,7 +51,7 @@ public class TeacherService {
     public ResponseEntity<String> delete(Long id) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if(!teacher.isPresent()) {
-            return teacherNotFound();
+            return ResponseUtil.notFoundId("Teacher");
         }
         teacherRepository.deleteById(id);
         return new ResponseEntity<>("Teacher deleted", HttpStatus.OK);
@@ -57,7 +60,7 @@ public class TeacherService {
     public ResponseEntity<String> changePassword(Long id, String password) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if(!teacher.isPresent()) {
-            return teacherNotFound();
+            return ResponseUtil.notFoundId("Teacher");
         }
         if (password == null || password.trim().isEmpty()) {
             return new ResponseEntity<>("Password is empty", HttpStatus.BAD_REQUEST);
@@ -70,7 +73,7 @@ public class TeacherService {
     public ResponseEntity<String> addDisciplines(Long id, Set<Long> disciplines) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if(!teacher.isPresent()) {
-            return teacherNotFound();
+            return ResponseUtil.notFoundId("Teacher");
         }
         List<Discipline> oldDisciplines = teacher.get().getDisciplines();
         List<Discipline> newDisciplines = (List<Discipline>) disciplineRepository.findAllById(disciplines);
@@ -83,7 +86,7 @@ public class TeacherService {
     public ResponseEntity<String> deleteDisciplines(Long id, Set<Long> disciplines) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if (!teacher.isPresent()) {
-            return teacherNotFound();
+            return ResponseUtil.notFoundId("Teacher");
         }
         List<Discipline> oldDisciplines = teacher.get().getDisciplines();
         List<Discipline> removableDisciplines = (List<Discipline>) disciplineRepository.findAllById(disciplines);
@@ -93,7 +96,4 @@ public class TeacherService {
         return new ResponseEntity<>("Disciplines deleted", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> teacherNotFound() {
-        return new ResponseEntity<>("Teacher with this id not found", HttpStatus.NOT_FOUND);
-    }
 }
