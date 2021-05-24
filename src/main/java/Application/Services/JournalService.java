@@ -52,6 +52,9 @@ public class JournalService {
                 BigDecimal cost = lessonOptional.get().getDiscipline().getCost();
                 studentInfo.getStudent().setBalance(balance.subtract(cost));
             }
+            if(studentInfo.getStudent().getBalance().compareTo(new BigDecimal("0")) == -1) {
+                studentInfo.getStudent().setDebtor(Boolean.TRUE);
+            }
             journalRepository.save(studentInfo);
         }
         return new ResponseEntity<>("Journal added", HttpStatus.OK);
