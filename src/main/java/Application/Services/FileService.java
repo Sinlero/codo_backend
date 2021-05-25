@@ -6,6 +6,7 @@ import Application.Entities.EventEntities.News;
 import Application.Data.Repositories.EventRepositories.EventRepository;
 import Application.Data.Repositories.ImageRepository;
 import Application.Data.Repositories.EventRepositories.NewsRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@Slf4j
 public class FileService {
 
     public static final File FILES_PATH = new File(System.getProperty("user.dir") + "/Images/");
@@ -80,7 +82,7 @@ public class FileService {
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void cleaningPictures() {
-        System.out.println("Cleaning images");
+        log.info("Cleaning pictures");
         TreeSet<Long> allId = new TreeSet<>();
         List<News> newses = newsRepository.findAll();
         List<Event> events = eventRepository.findAll();
@@ -101,6 +103,7 @@ public class FileService {
                 delete(image);
             }
         }
+        log.info("Pictures cleaned");
     }
 
     public void delete(Image image) {
