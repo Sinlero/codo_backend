@@ -7,15 +7,19 @@ import Application.Entities.Course;
 import Application.Entities.Discipline;
 import Application.Entities.Lesson;
 import Application.Utils.Response.ResponseUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class LessonService {
 
     private LessonRepository lessonRepository;
@@ -93,10 +97,22 @@ public class LessonService {
         if (!course.isPresent()) {
             return ResponseUtil.notFoundId("Course");
         }
-        Optional<List<Lesson>> lessons = lessonRepository.findAllByDateAndCourse(lessonDate, course.get());
-        if (!lessons.isPresent()) {
+        Optional<List<Lesson>> optionalLessons = lessonRepository.findAllByDateAndCourse(lessonDate, course.get());
+        if (!optionalLessons.isPresent()) {
             return new ResponseEntity("No lessons found for this course on this day", HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(lessons.get());
+        List<Lesson> lessons = optionalLessons.get();
+        List<Integer> numbersLessons = new ArrayList<>();
+        for (Lesson lesson : lessons) {
+            numbersLessons.add(lesson.getLessonNumber());
+        }
+        Integer maxLesson = lessons.stream().max(Comparator.comparingInt(Lesson::getLessonNumber)).get().getLessonNumber();
+        for (int i = 1; i <= maxLesson; i++) {
+            if(!numbersLessons.contains(i)) {
+                lessons.add(new Lesson(null,null, null, course.get(), i, null, null, lessonDate));
+            }
+        }
+        lessons.sort(Comparator.comparingInt(Lesson::getLessonNumber));
+        return ResponseEntity.ok(lessons);
     }
 }
