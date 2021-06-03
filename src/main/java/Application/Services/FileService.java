@@ -22,9 +22,9 @@ public class FileService {
 
     public static final File FILES_PATH = new File(System.getProperty("user.dir") + "/Images/");
 
-    private NewsRepository newsRepository;
-    private ImageRepository imageRepository;
-    private EventRepository eventRepository;
+    private final NewsRepository newsRepository;
+    private final ImageRepository imageRepository;
+    private final EventRepository eventRepository;
 
     public FileService(NewsRepository newsRepository, ImageRepository imageRepository, EventRepository eventRepository) {
         this.newsRepository = newsRepository;

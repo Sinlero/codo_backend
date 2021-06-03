@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')")
 public class JournalController {
 
-    private JournalService journalService;
+    private final JournalService journalService;
 
     public JournalController(JournalService journalService) {
         this.journalService = journalService;

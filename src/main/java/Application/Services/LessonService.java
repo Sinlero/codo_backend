@@ -22,20 +22,25 @@ import java.util.Optional;
 @Slf4j
 public class LessonService {
 
-    private LessonRepository lessonRepository;
-    private DisciplineRepository disciplineRepository;
-    private CourseRepository courseRepository;
+    private final LessonRepository lessonRepository;
+    private final DisciplineRepository disciplineRepository;
+    private final CourseRepository courseRepository;
+    private final ResponseUtil responseUtil;
 
-    public LessonService(LessonRepository lessonRepository, DisciplineRepository disciplineRepository, CourseRepository courseRepository) {
+    public LessonService(LessonRepository lessonRepository,
+                         DisciplineRepository disciplineRepository,
+                         CourseRepository courseRepository,
+                         ResponseUtil responseUtil) {
         this.lessonRepository = lessonRepository;
         this.disciplineRepository = disciplineRepository;
         this.courseRepository = courseRepository;
+        this.responseUtil = responseUtil;
     }
 
     public ResponseEntity<String> add(Lesson lesson) {
         Optional<Discipline> discipline = disciplineRepository.findById(lesson.getDiscipline().getId());
         if (!discipline.isPresent()) {
-            return ResponseUtil.notFoundId("Discipline");
+            return responseUtil.notFoundId("Discipline");
         }
         lessonRepository.save(lesson);
         return new ResponseEntity<>("Lesson added", HttpStatus.OK);
@@ -44,7 +49,7 @@ public class LessonService {
     public ResponseEntity<String> addHomework(Long id, String homework) {
         Optional<Lesson> lesson = lessonRepository.findById(id);
         if (!lesson.isPresent()) {
-            return ResponseUtil.notFoundId("Lesson");
+            return responseUtil.notFoundId("Lesson");
         }
         lesson.get().setHomework(homework);
         lessonRepository.save(lesson.get());
@@ -54,7 +59,7 @@ public class LessonService {
     public ResponseEntity<String> delete(Long id) {
         Optional<Lesson> lesson = lessonRepository.findById(id);
         if (!lesson.isPresent()) {
-            return ResponseUtil.notFoundId("Lesson");
+            return responseUtil.notFoundId("Lesson");
         }
         lessonRepository.delete(lesson.get());
         return new ResponseEntity<>("Lesson deleted", HttpStatus.OK);
@@ -79,7 +84,7 @@ public class LessonService {
     public ResponseEntity getByCourse(Long courseId) {
         Optional<Course> course = courseRepository.findById(courseId);
         if (!course.isPresent()) {
-            return ResponseUtil.notFoundId("Course");
+            return responseUtil.notFoundId("Course");
         }
         Optional<List<Lesson>> lessons = lessonRepository.findAllByCourse(course.get());
         if (!lessons.isPresent()) {
@@ -95,7 +100,7 @@ public class LessonService {
                                             Integer.parseInt(dateArray[2]));
         Optional<Course> course = courseRepository.findById(courseId);
         if (!course.isPresent()) {
-            return ResponseUtil.notFoundId("Course");
+            return responseUtil.notFoundId("Course");
         }
         Optional<List<Lesson>> optionalLessons = lessonRepository.findAllByDateAndCourse(lessonDate, course.get());
         if (!optionalLessons.isPresent()) {

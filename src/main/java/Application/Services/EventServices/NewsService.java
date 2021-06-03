@@ -18,14 +18,19 @@ import java.util.Optional;
 @Service
 public class NewsService {
 
-    private ImageRepository imageRepository;
-    private NewsRepository newsRepository;
-    private FileService fileService;
+    private final ImageRepository imageRepository;
+    private final NewsRepository newsRepository;
+    private final FileService fileService;
+    private final ResponseUtil responseUtil;
 
-    NewsService(ImageRepository imageRepository, NewsRepository newsRepository, FileService fileService) {
+    NewsService(ImageRepository imageRepository,
+                NewsRepository newsRepository,
+                FileService fileService,
+                ResponseUtil responseUtil) {
         this.imageRepository = imageRepository;
         this.newsRepository = newsRepository;
         this.fileService = fileService;
+        this.responseUtil = responseUtil;
     }
 
     public ResponseEntity<String> upload(MultipartFile file, String head, String previewText, String fullText) {
@@ -47,7 +52,7 @@ public class NewsService {
     public ResponseEntity<String> delete(Long id) {
         Optional<News> news = newsRepository.findById(id);
         if (!news.isPresent()) {
-            return ResponseUtil.notFoundId("News");
+            return responseUtil.notFoundId("News");
         }
         newsRepository.deleteById(id);
         Optional<Image> imageEntity = imageRepository.findById(news.get().getImage().getId());
@@ -60,7 +65,7 @@ public class NewsService {
     public ResponseEntity<String> update(Long id, String head, String previewText, String fullText) {
         Optional<News> news = newsRepository.findById(id);
         if (!news.isPresent()) {
-            return ResponseUtil.notFoundId("News");
+            return responseUtil.notFoundId("News");
         }
         news.get().setHead(head);
         news.get().setPreviewText(previewText);
@@ -89,7 +94,7 @@ public class NewsService {
     public String getFullText(Long id) {
         Optional<News> news = newsRepository.findById(id);
         if (!news.isPresent()) {
-            return "News with this id not found";
+            return responseUtil.notFoundId("News").getBody();
         } else {
             return news.get().getFullText();
         }

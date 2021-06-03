@@ -18,14 +18,19 @@ import java.util.Optional;
 @Service
 public class EventService {
 
-    private ImageRepository imageRepository;
-    private EventRepository eventRepository;
-    private FileService fileService;
+    private final ImageRepository imageRepository;
+    private final EventRepository eventRepository;
+    private final FileService fileService;
+    private final ResponseUtil responseUtil;
 
-    public EventService(ImageRepository imageRepository, EventRepository eventRepository, FileService fileService) {
+    public EventService(ImageRepository imageRepository,
+                        EventRepository eventRepository,
+                        FileService fileService,
+                        ResponseUtil responseUtil) {
         this.imageRepository = imageRepository;
         this.eventRepository = eventRepository;
         this.fileService = fileService;
+        this.responseUtil = responseUtil;
     }
 
     public ResponseEntity<String> upload(MultipartFile file, String head, String previewText, String fullText,
@@ -48,7 +53,7 @@ public class EventService {
     public ResponseEntity<String> delete(Long id) {
         Optional<Event> event = eventRepository.findById(id);
         if (!event.isPresent()) {
-            return ResponseUtil.notFoundId("Event");
+            return responseUtil.notFoundId("Event");
         }
         eventRepository.deleteById(id);
         Optional<Image> imageEntity = imageRepository.findById(event.get().getImage().getId());
@@ -61,7 +66,7 @@ public class EventService {
     public ResponseEntity<String> update(Long id, String head, String previewText, String fullText) {
         Optional<Event> event = eventRepository.findById(id);
         if (!event.isPresent()) {
-            return ResponseUtil.notFoundId("Event");
+            return responseUtil.notFoundId("Event");
         }
         event.get().setHead(head);
         event.get().setPreviewText(previewText);
@@ -95,7 +100,7 @@ public class EventService {
     public String getFullTextById(Long id) {
         Optional<Event> event = eventRepository.findById(id);
         if (!event.isPresent()) {
-            return "Event with this id not found";
+            return responseUtil.notFoundId("Event").getBody();
         } else {
             return event.get().getFullText();
         }

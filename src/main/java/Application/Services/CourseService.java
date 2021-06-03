@@ -13,10 +13,12 @@ import java.util.Optional;
 @Service
 public class CourseService {
 
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
+    private final ResponseUtil responseUtil;
 
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, ResponseUtil responseUtil) {
         this.courseRepository = courseRepository;
+        this.responseUtil = responseUtil;
     }
 
     public ResponseEntity<String> add(String name) {
@@ -27,7 +29,7 @@ public class CourseService {
     public ResponseEntity<String> delete(Long id) {
         Optional<Course> course = courseRepository.findById(id);
         if (!course.isPresent()) {
-            return ResponseUtil.notFoundId("Course");
+            return responseUtil.notFoundId("Course");
         }
         courseRepository.delete(course.get());
         return new ResponseEntity<>("Course deleted", HttpStatus.OK);
@@ -36,7 +38,7 @@ public class CourseService {
     public ResponseEntity<String> update(Long id, String name) {
         Optional<Course> course = courseRepository.findById(id);
         if (!course.isPresent()) {
-            return ResponseUtil.notFoundId("Course");
+            return responseUtil.notFoundId("Course");
         }
         course.get().setName(name);
         courseRepository.save(course.get());

@@ -16,12 +16,16 @@ import java.util.Set;
 @Service
 public class TeacherService {
 
-    private TeacherRepository teacherRepository;
-    private DisciplineRepository disciplineRepository;
+    private final TeacherRepository teacherRepository;
+    private final DisciplineRepository disciplineRepository;
+    private final ResponseUtil responseUtil;
 
-    public TeacherService(TeacherRepository teacherRepository, DisciplineRepository disciplineRepository) {
+    public TeacherService(TeacherRepository teacherRepository,
+                          DisciplineRepository disciplineRepository,
+                          ResponseUtil responseUtil) {
         this.teacherRepository = teacherRepository;
         this.disciplineRepository = disciplineRepository;
+        this.responseUtil = responseUtil;
     }
 
     public List<Teacher> getAll() {
@@ -29,8 +33,8 @@ public class TeacherService {
     }
 
     public ResponseEntity<String> add(Teacher teacher) {
-        if (teacherRepository.findTeacherByLogin(teacher.getLogin()).isPresent()) {
-            return new ResponseEntity<>("Teacher with this login already have", HttpStatus.CONFLICT);
+        if (!responseUtil.userIsUnique(teacher)) {
+            return new ResponseEntity<>("User with this login already exists", HttpStatus.CONFLICT);
         }
         teacher.setPrivilege(2);
         teacherRepository.save(teacher);
@@ -40,7 +44,7 @@ public class TeacherService {
     public ResponseEntity<String> update(Long id, Teacher updatedTeacher) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if (!teacher.isPresent()) {
-            return ResponseUtil.notFoundId("Teacher");
+            return responseUtil.notFoundId("Teacher");
         }
         updatedTeacher.setId(id);
         updatedTeacher.setPassword(teacher.get().getPassword());
@@ -51,7 +55,7 @@ public class TeacherService {
     public ResponseEntity<String> delete(Long id) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if(!teacher.isPresent()) {
-            return ResponseUtil.notFoundId("Teacher");
+            return responseUtil.notFoundId("Teacher");
         }
         teacherRepository.deleteById(id);
         return new ResponseEntity<>("Teacher deleted", HttpStatus.OK);
@@ -60,7 +64,7 @@ public class TeacherService {
     public ResponseEntity<String> changePassword(Long id, String password) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if(!teacher.isPresent()) {
-            return ResponseUtil.notFoundId("Teacher");
+            return responseUtil.notFoundId("Teacher");
         }
         if (password == null || password.trim().isEmpty()) {
             return new ResponseEntity<>("Password is empty", HttpStatus.BAD_REQUEST);
@@ -73,7 +77,7 @@ public class TeacherService {
     public ResponseEntity<String> addDisciplines(Long id, Set<Long> disciplines) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if(!teacher.isPresent()) {
-            return ResponseUtil.notFoundId("Teacher");
+            return responseUtil.notFoundId("Teacher");
         }
         List<Discipline> oldDisciplines = teacher.get().getDisciplines();
         List<Discipline> newDisciplines = (List<Discipline>) disciplineRepository.findAllById(disciplines);
@@ -86,7 +90,7 @@ public class TeacherService {
     public ResponseEntity<String> deleteDisciplines(Long id, Set<Long> disciplines) {
         Optional<Teacher> teacher = teacherRepository.findById(id);
         if (!teacher.isPresent()) {
-            return ResponseUtil.notFoundId("Teacher");
+            return responseUtil.notFoundId("Teacher");
         }
         List<Discipline> oldDisciplines = teacher.get().getDisciplines();
         List<Discipline> removableDisciplines = (List<Discipline>) disciplineRepository.findAllById(disciplines);

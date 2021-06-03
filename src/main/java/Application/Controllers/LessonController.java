@@ -13,7 +13,7 @@ import java.util.List;
 @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')")
 public class LessonController {
 
-    private LessonService lessonService;
+    private final LessonService lessonService;
 
     public LessonController(LessonService lessonService) {
         this.lessonService = lessonService;

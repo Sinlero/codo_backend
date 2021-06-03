@@ -20,7 +20,7 @@ public class ResponseUtil {
         this.teacherRepository = teacherRepository;
         this.administratorRepository = administratorRepository;
     }
-    
+
     public boolean userIsUnique(AbstractUser user) {
         if (studentRepository.findStudentByLogin(user.getLogin()).isPresent()) {
             return false;

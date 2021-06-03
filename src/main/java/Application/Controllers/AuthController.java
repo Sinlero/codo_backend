@@ -19,9 +19,9 @@ import java.util.List;
 @RestController
 public class AuthController {
 
-    private AdministratorRepository administratorRepository;
-    private StudentRepository studentRepository;
-    private TeacherRepository teacherRepository;
+    private final AdministratorRepository administratorRepository;
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
 
     public AuthController(AdministratorRepository administratorRepository, TeacherRepository teacherRepository,
                           StudentRepository studentRepository) {

@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @RequestMapping("/discipline")
 public class DisciplineController {
 
-    private DisciplineService disciplineService;
+    private final DisciplineService disciplineService;
 
     public DisciplineController(DisciplineService disciplineService) {
         this.disciplineService = disciplineService;

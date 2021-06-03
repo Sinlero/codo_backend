@@ -15,12 +15,14 @@ import java.util.Optional;
 @Service
 public class DisciplineService {
 
-    private DisciplineRepository disciplineRepository;
-    private ColorCodeGenerator colorCodeGenerator;
+    private final DisciplineRepository disciplineRepository;
+    private final ColorCodeGenerator colorCodeGenerator;
+    private final ResponseUtil responseUtil;
 
-    public DisciplineService(DisciplineRepository disciplineRepository, ColorCodeGenerator colorCodeGenerator){
+    public DisciplineService(DisciplineRepository disciplineRepository, ColorCodeGenerator colorCodeGenerator, ResponseUtil responseUtil){
         this.disciplineRepository = disciplineRepository;
         this.colorCodeGenerator = colorCodeGenerator;
+        this.responseUtil = responseUtil;
     }
 
     public List<Discipline> getAll() {
@@ -39,7 +41,7 @@ public class DisciplineService {
     public ResponseEntity<String> delete(Long id) {
         Optional<Discipline> discipline = disciplineRepository.findById(id);
         if (!discipline.isPresent()) {
-            return ResponseUtil.notFoundId("Discipline");
+            return responseUtil.notFoundId("Discipline");
         }
         disciplineRepository.deleteById(id);
         return new ResponseEntity<>("Discipline deleted", HttpStatus.OK);
@@ -48,7 +50,7 @@ public class DisciplineService {
     public ResponseEntity<String> update(Long id, String name, BigDecimal cost, String colorCode) {
         Optional<Discipline> discipline = disciplineRepository.findById(id);
         if (!discipline.isPresent()) {
-            return ResponseUtil.notFoundId("Discipline");
+            return responseUtil.notFoundId("Discipline");
         }
         Discipline updatedDiscipline = discipline.get();
         updatedDiscipline.setName(name);

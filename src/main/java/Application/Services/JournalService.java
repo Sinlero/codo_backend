@@ -22,27 +22,32 @@ import java.util.Optional;
 @Service
 public class JournalService {
 
-    private LessonRepository lessonRepository;
-    private StudentRepository studentRepository;
-    private JournalRepository journalRepository;
+    private final LessonRepository lessonRepository;
+    private final StudentRepository studentRepository;
+    private final JournalRepository journalRepository;
+    private final ResponseUtil responseUtil;
 
-    public JournalService(LessonRepository lessonRepository, StudentRepository studentRepository, JournalRepository journalRepository) {
+    public JournalService(LessonRepository lessonRepository,
+                          StudentRepository studentRepository,
+                          JournalRepository journalRepository,
+                          ResponseUtil responseUtil) {
         this.lessonRepository = lessonRepository;
         this.studentRepository = studentRepository;
         this.journalRepository = journalRepository;
+        this.responseUtil = responseUtil;
     }
 
     @Transactional
     public ResponseEntity<String> add(JournalUpdate journalUpdate) {
         Optional<Lesson> lessonOptional = lessonRepository.findById(journalUpdate.getLessonId());
         if (!lessonOptional.isPresent()) {
-            return ResponseUtil.notFoundId("Lesson");
+            return responseUtil.notFoundId("Lesson");
         }
         List<Journal> journal = new ArrayList<>();
         for (StudentInfo studentInfo : journalUpdate.getJournalList()) {
             Optional<Student> studentOptional = studentRepository.findById(studentInfo.getStudentId());
             if (!studentOptional.isPresent()) {
-                return ResponseUtil.notFoundId("Student");
+                return responseUtil.notFoundId("Student");
             }
             journal.add(new Journal(studentOptional.get(), lessonOptional.get(), studentInfo.getPresence(), studentInfo.getMark()));
         }
@@ -67,7 +72,7 @@ public class JournalService {
     public ResponseEntity getByLesson(Long lessonId) {
         Optional<Lesson> lessonOptional = lessonRepository.findById(lessonId);
         if (!lessonOptional.isPresent()) {
-            return ResponseUtil.notFoundId("Lesson");
+            return responseUtil.notFoundId("Lesson");
         }
         Optional<List<Journal>> journals = journalRepository.findAllByLesson(lessonOptional.get());
         if (!journals.isPresent()) {
