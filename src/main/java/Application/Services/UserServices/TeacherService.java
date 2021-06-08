@@ -33,7 +33,7 @@ public class TeacherService {
     }
 
     public ResponseEntity<String> add(Teacher teacher) {
-        if (!responseUtil.userIsUnique(teacher)) {
+        if (responseUtil.userIsExist(teacher)) {
             return new ResponseEntity<>("User with this login already exists", HttpStatus.CONFLICT);
         }
         teacher.setPrivilege(2);

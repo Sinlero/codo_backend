@@ -68,7 +68,7 @@ public class StudentService {
     }
 
     public ResponseEntity<String> addStudent(Student newStudent) {
-        if (!responseUtil.userIsUnique(newStudent)) {
+        if (responseUtil.userIsExist(newStudent)) {
             return new ResponseEntity<>("User with this login already exists", HttpStatus.CONFLICT);
         }
         newStudent.setPrivilege(3);
